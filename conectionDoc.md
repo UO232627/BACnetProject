@@ -37,9 +37,9 @@
       - **Position**: Posición dentro del array (**¡IMPORTANTE!** En la documentación se indica que es el index dentro del array, pero tiene que coincidir con la posición en memoria de la configuración *BACnet*)
       - **Template**: Plantilla del mensaje que se quiere recibir (es muy recomendable indicar una plantilla para no recibir mensaje con un formato no válido)
         - Las plantillas se definen con texto plano, además de tres palabras clave:
-          - **$VALUE$**: Valor de un dato
-          - **$TIME$**: Fecha y hora del mensaje
-          - **$DESC$**: Descripción del mensaje
+          - *$VALUE$*: Valor de un dato
+          - *$TIME$*: Fecha y hora del mensaje
+          - *$DESC$*: Descripción del mensaje
       - **Mnemonic**: Descripción del topic
 6. Configurar los accesos *BACnet* (igual para read y write)
     - **Data type**: Tipo del dato (seleccionar entre los predefinidos)
