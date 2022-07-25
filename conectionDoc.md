@@ -34,7 +34,7 @@
       - **QoS**: QoS del mensaje
       - **Data type**: Tipo del valor (elegir uno de los prefijados)
       - **Dimension**: Tamaño del valor (**POR CONFIRMAR** Tiene que coincidir con el tamaño indicado en la parte *BACnet*)
-      - **Position**: Posición dentro del array (**IMPORTANTE** En la documentación se indica que es el index dentro del array, pero tiene que coincidir con la posición en memoria de la configuración *BACnet*)
+      - **Position**: Posición dentro del array (**¡IMPORTANTE!** En la documentación se indica que es el index dentro del array, pero tiene que coincidir con la posición en memoria de la configuración *BACnet*)
       - **Template**: Plantilla del mensaje que se quiere recibir (es muy recomendable indicar una plantilla para no recibir mensaje con un formato no válido)
         - Las plantillas se definen con texto plano, además de tres palabras clave:
           - **$VALUE$**: Valor de un dato
