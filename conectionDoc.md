@@ -2,6 +2,7 @@
 
 ## Configuración del *Gateway*
 
+image:conexiones.png["Menú de configuración"]
 1. En el apartado *BACnet Slave* (En la interfaz de usuario de *SW67938*), indicar la IP que se quiere que tenga el *gateway* (tiene que estar en el rango de direcciones del router al que va a estar conectado), máscara de subred y demás parámetros
 2. Configurar conexión *MQTT*
     - En la zona de comunicaciones, en el apartado *MQTT*, indicar la dirección IP, puerto, etc. del broker al que se quiere conectar el *gateway*
@@ -18,7 +19,7 @@
       - **QoS**: *QoS* del mensaje
       - **Data type**: Tipo del valor (elegir entre uno de los prefijados)
       - **Dimension**: Tamaño del valor (**POR CONFIRMAR** Tiene que coincidir con el tamaño indicado en la parte *BACnet*)
-      - **Position**: Posición dentro del array (**IMPORTANTE** En la documentación se indica que es el index dentro del array, pero tiene que coincidir con la posición en memoria de la configuración *BACnet*)
+      - **Position**: Posición dentro del array (**¡IMPORTANTE!** En la documentación se indica que es el index dentro del array, pero tiene que coincidir con la posición en memoria de la configuración *BACnet*)
       - **Template**: Plantilla del mensaje que se quiere recibir (es muy recomendable indicar una plantilla para no recibir mensaje con un formato no válido)
         - Las plantillas se definen con texto plano, además de tres palabras clave:
           - $ VALUE $: Valor de un dato
@@ -54,7 +55,7 @@
     - Pone el switch en la posición ON
     - Encender el *gateway*
     - Conectar el cable ethernet del PC al *gateway*
-    - Indicar la dirección *192.168.2.205*
+    - Indicar la dirección *192.168.2.205* (**¡IMPORTANTE!** La carga de configuraciones posteriores se hará indicando la dirección IP con la que se ha configurado)
     - Seleccionar las operaciones a realizar (actualización de firmware, cargar configuración o ambas) y ejecutar
     - Apagar el *gateway*
     - Poner el switch en la posición OFF
