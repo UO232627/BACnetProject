@@ -3,22 +3,22 @@
 ## Configuración del *Gateway*
 
 1. Entrar en la configuración de conexiones
-![Menú configuración conexiones](https://github.com/UO232627/gatewayProject/blob/main/images/conexiones.PNG "Configuración de conexiones")
+![Menú configuración conexiones](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/conexiones.PNG "Configuración de conexiones")
 2. En el apartado *BACnet Slave* (En la interfaz de usuario de *SW67938*), indicar la IP que se quiere que tenga el *gateway* (tiene que estar en el rango de direcciones del router al que va a estar conectado), máscara de subred y demás parámetros
-![Configuración conexión BACnet](https://github.com/UO232627/gatewayProject/blob/main/images/conexionesBACnet.PNG "Configuración conexión BACnet")
+![Configuración conexión BACnet](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/conexionesBACnet.PNG "Configuración conexión BACnet")
 3. Configurar conexión *MQTT*
     - En la zona de comunicaciones, en el apartado *MQTT*, indicar la dirección IP, puerto, etc. del broker al que se quiere conectar el *gateway*
     - Indicar un client ID (el nombre del *gateway*) único de ser posible, ya que es como se identificará de cara a otros dispositivos
     - **¡IMPORTANTE!** Indicar un valor de *keep alive* distinto de 0. Si no se indica, el broker puede rechazar los intentos de conexión del gateway
     - *OPCIONAL* Se pueden indicar un mensaje *will* para las desconexiones no correctas y las nuevas conexiones y un mensaje de conexión que el *gateway* enviará al broker cuando se conecte a este (hay que indicar topic y contenido)
-![Configuración conexión MQTT](https://github.com/UO232627/gatewayProject/blob/main/images/conexionesMQTT.PNG "Configuración conexión MQTT")
+![Configuración conexión MQTT](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/conexionesMQTT.PNG "Configuración conexión MQTT")
 4. Configurar conexión Ethernet indicando dirección IP, máscara de subred y gateway
-![Configuración conexion Ethernet](https://github.com/UO232627/gatewayProject/blob/main/images/conexionesEthernet.PNG "Configuración conexión Ethernet")
+![Configuración conexion Ethernet](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/conexionesEthernet.PNG "Configuración conexión Ethernet")
 5. Configurar el protocolo *NTP*
     - Como ejemplo se ha usado *pool.ntp.org* y un tiempo de 1000 (en segundos)
-![Configuración NTP](https://github.com/UO232627/gatewayProject/blob/main/images/conexionesNTP.PNG "Configuración NTP")
+![Configuración NTP](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/conexionesNTP.PNG "Configuración NTP")
 6. Configurar los topics *MQTT* (las publicaciones y las suscripciones se configuran por separado)
-![Menú configuración MQTT](https://github.com/UO232627/gatewayProject/blob/main/images/MQTT.PNG "Menú configuración MQTT")
+![Menú configuración MQTT](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/MQTT.PNG "Menú configuración MQTT")
     - *MQTT* Publish (topics en los que se quiere publicar)
       - **Topic**: Topic al que se quiere suscribir
       - **Retained**: Valor retained del mensaje
@@ -48,9 +48,9 @@
           - $ TIME $: Fecha y hora del mensaje
           - $ DESC $: Descripción del mensaje
       - **Mnemonic**: Descripción del topic
-![Configuración MQTT](https://github.com/UO232627/gatewayProject/blob/main/images/MQTTConfiguracion.PNG "Configuración MQTT")
+![Configuración MQTT](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/MQTTConfiguracion.PNG "Configuración MQTT")
 7. Configurar los accesos *BACnet* (igual para read y write)
-![Menú configuración BACnet](https://github.com/UO232627/gatewayProject/blob/main/images/BACnet.PNG "Menú configuración BACnet")
+![Menú configuración BACnet](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/BACnet.PNG "Menú configuración BACnet")
     - **Data type**: Tipo del dato (seleccionar entre los predefinidos)
       - Para trabajar con float, usar los *analog*
     - **Eng. unit**: Unidad del dato (selecciona entre las predefinidas)
@@ -58,9 +58,9 @@
     - **Start bit**: Bit inicial para los valores en binario
     - **Length**: Tamaño del dato (**POR CONFIRMAR** Tiene que coincidir con el tamaño indicado en la parte *MQTT*)
     - **Mnemonic**: Descripción del topic
-![Configuración BACnet](https://github.com/UO232627/gatewayProject/blob/main/images/BACnetConfiguracion.PNG "Configuración BACnet")
+![Configuración BACnet](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/BACnetConfiguracion.PNG "Configuración BACnet")
 8. (**Solo la primera vez, luego se puede hacer sin desconectar el dispositivo ni teniendo que cambiar la posición del switch**)
-![Menú configuración carga](https://github.com/UO232627/gatewayProject/blob/main/images/carga.PNG "Menú configuración carga")
+![Menú configuración carga](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/carga.PNG "Menú configuración carga")
 Cargar la configuración en el *gateway*. Para ello:
     - Apagar el *gateway*
     - Pone el switch en la posición ON
@@ -70,7 +70,7 @@ Cargar la configuración en el *gateway*. Para ello:
     - Seleccionar las operaciones a realizar (actualización de firmware, cargar configuración o ambas) y ejecutar
     - Apagar el *gateway*
     - Poner el switch en la posición OFF
-![Configuración carga](https://github.com/UO232627/gatewayProject/blob/main/images/cargaConfiguracion.PNG "Configuración carga")
+![Configuración carga](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/cargaConfiguracion.PNG "Configuración carga")
 9. Conectar el *gateway* al router
 10. Comprobar que si añadimos la red del router a **YABE**, detecta automáticamente el *gateway*
 
