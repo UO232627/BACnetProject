@@ -132,10 +132,14 @@ Cargar la configuración en el *gateway*. Para ello:
 
 ## Visualización de la red en **YABE**/**WIRESHARK** [(Más detalles)](https://www.domat-int.com/en/bacnet-a-brief-introduction-to-the-basics-pt-2)
 
-- Para añadir una red y nuevos dispositivos a YABE, hacer click en la cruz verde y en el apartado *BACnet/IP over Udp*, indicar el puerto y la dirección del router al que está conectado el gateway
-- *YABE* debería detectar automáticamente todos los dispositivos BACnet conectados a la red y sus objetos (Ventana *Address space*)
-  - Arrastrando los objetos a la ventana *Subscriptions, Periodic Polling, Events/Alarms*, podemos visualizar sus valores en tiempo real (en casos como los enteros nos pedirá que indiquemos cada cuanto queremos refrescar la información)
-  - Si se hace algún cambio en la configuración del *gateway*, hay que eliminar la red en *YABE* y volver a añadirla para ver los cambios reflejados
+- Pasos para visualizar una red en YABE:
+    1. Entrar en el menú de añadir red haciendo click en la cruz verde ![Menú nueva red](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/a%C3%B1adirNuevaRed.PNG "Menú nueva red")
+    2. Indicar el puerto en el que se quiere añadir y la dirección de la red a la que está conectado el gateway ![Menú nueva red 2](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/a%C3%B1adirRed2.PNG "Menú nueva red 2)
+    3. YABE debería detectar automáticamente todos los dispositivos BACnet conectados a esa red y clickando encima, se verían todos sus objetos (ventana *Address space* ![Dispositivo visible](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/dispositivoVisible.PNG "Dispositivo visible")
+    4. En la ventana *Properties* podemos ver el contenido y los valores de todas las propiedades del elemento seleccionado en la ventana *Address space* ![Propiedades dispositivo](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/propiedadesDispositivo.PNG "Propiedades dispositivo") ![Propiedades objeto](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/propiedadesObjeto.PNG "Propiedades objeto")
+    5. Arrastrando los elementos a la ventana *Subscriptions, Periodic Polling, Events/Alarms* podemos visualizar sus valores en tiempo real (en casos como los enteros nos pedirá que le indiquemos el periodo de refresco de información) ![Valores en tiempo real](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/valoresTiempoReal.PNG "Valores en tiempo real")
+
+- Si se hace algún cambio en la configuración del *gateway*, hay que eliminar la red en *YABE* y volver a añadirla para ver reflejados los cambios
 
 - Si queremos ver el contenido de los mensajes para saber como es la estructura de un mensaje *BACnet*, podemos usar la herramienta *Wireshark* y filtrar los paquetes de la red por *BACnet*
   - Aquí es donde veríamos los paquetes generados en la escritura/lectura mediante *NODE-RED*
