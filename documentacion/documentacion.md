@@ -96,21 +96,50 @@ Cargar la configuración en el *gateway*. Para ello:
 - Una vez creada la imagen ya se puede desplegar los contenedores
     - `docker-compose up`
 
+## Visualización de la red en **YABE**/**WIRESHARK** [(Más detalles)](https://www.domat-int.com/en/bacnet-a-brief-introduction-to-the-basics-pt-2)
+
+- Pasos para visualizar una red en YABE:
+    1. Entrar en el menú de añadir red haciendo click en la cruz verde ![Menú nueva red](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/a%C3%B1adirNuevaRed.PNG "Menú nueva red")
+    2. Indicar el puerto en el que se quiere añadir y la dirección de la red a la que está conectado el gateway ![Menú nueva red 2](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/a%C3%B1adirRed2.PNG "Menú nueva red 2)
+    3. YABE debería detectar automáticamente todos los dispositivos BACnet conectados a esa red y clickando encima, se verían todos sus objetos (ventana *Address space* ![Dispositivo visible](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/dispositivoVisible.PNG "Dispositivo visible")
+    4. En la ventana *Properties* podemos ver el contenido y los valores de todas las propiedades del elemento seleccionado en la ventana *Address space* ![Propiedades dispositivo](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/propiedadesDispositivo.PNG "Propiedades dispositivo") ![Propiedades objeto](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/propiedadesObjeto.PNG "Propiedades objeto")
+    5. Arrastrando los elementos a la ventana *Subscriptions, Periodic Polling, Events/Alarms* podemos visualizar sus valores en tiempo real (en casos como los enteros nos pedirá que le indiquemos el periodo de refresco de información) ![Valores en tiempo real](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/valoresTiempoReal.PNG "Valores en tiempo real")
+
+- Si se hace algún cambio en la configuración del *gateway*, hay que eliminar la red en *YABE* y volver a añadirla para ver reflejados los cambios
+
+Si queremos ver el contenido de los mensajes para saber como es la estructura de un mensaje *BACnet*, podemos usar la herramienta *Wireshark*
+- Comenzamos a capturar *Ethernet* (click derecho - Iniciar captura) ![wiresharkEthernet](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/wiresharkEthernet.PNG "wiresharkEthernet")
+- Una vez iniciada la captura, podemos filtrar los paquetes que interceptamos, por ejemplo MQTT y BACnet que son los que interesan en este caso ![wiresharkFiltro](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/wiresharkFiltro.PNG "wiresharkFiltro")
+- Aquí se puede ver toda la información que contiene un mensaje. Si queremos ir al *"valor"* de la petición, debemos abrir el apartado APDU ![wiresharkMensaje](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/wiresharkMensaje.PNG "wiresharkMensaje") ![wiresharkAPDU](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/wiresharkAPDU.PNG "wiresharkAPDU")
+    - En este caso, nuestro valor es *"Present Value (real): 0"*
+
 ## Conversión de mensajes MQTT del IAQ al *Gateway* (*NODE-RED*)
 
 - Para la transformación de mensajes mediante *NODE-RED*, se puede usar un *flow* en *NODE-RED* como este [ejemplo](https://github.com/UO232627/gatewayProject/blob/main/splitMQTT.json)
 
-- Los elementos del *flow* son:
-  - **fromIAQ**: Nodo que recibe mensajes *MQTT*
-  - **transformIntoJS**: Convierte el mensaje recibido en un objeto *JsvaScript*
-  - **separateMeasures**: Modifica el topic del mensaje con la cabecera en la que se va a publicar (toBACnet/UUID del dispositivo) y deja en el payload solo las medidas, eliminando la parte de información del dispositivo
-  - **splitMeasures**: Separa todas las medidas para trabajar de forma independiente sobre ellas
-  - **editMessage**: Añade al topic el nombre de la medida y deja en el payload del mensaje el valor leido para esa medida
-  - **toBroker**: Envia los mensajes *MQTT* al broker (uno por cada medida a su topic correspondiente)
+![flow](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/flow.PNG "flow")
 
-- La configuración de todos los parámetros de estos elementos se puede modificar en el fichero JSON de configuración que se carga en el contenedor nodered al crear el entorno de ejecución
+Los elementos del *flow* son:
+- **fromIAQ**: Nodo que recibe mensajes *MQTT*
+    - **Server**: Configuración de la conexión al broker *MQTT*. Se necesita al menos la dirección IP y el puerto, aunque según la configuración del broker puede ser necesarios datos de autenticación, de topics, etc.)
+    - **Action**: Selecciona si se suscribe a un topic concreto o dinámicamente según un tipo de mensaje
+    - **QoS**: QoS de los mensajes
+    - **Output**: Tipo de la salida (por defecto la autodetecta)
+    - **Name**: Nombre que se le da al nodo
+- **transformIntoJS**: Convierte el mensaje recibido en un objeto *JsvaScript*
+- **separateMeasures**: Modifica el topic del mensaje con la cabecera en la que se va a publicar (toBACnet/UUID del dispositivo) y deja en el payload solo las medidas, eliminando la parte de información del dispositivo
+- **splitMeasures**: Separa todas las medidas para trabajar de forma independiente sobre ellas
+- **editMessage**: Añade al topic el nombre de la medida y deja en el payload del mensaje el valor leido para esa medida
+- **toBroker**: Envia los mensajes *MQTT* al broker (un mensaje por cada medida a su topic correspondiente)
+    - **Server**: Configuración de la conexión al broker *MQTT*. Se necesita al menos la dirección IP y el puerto, aunque según la configuración del broker puede ser necesarios datos de autenticación, de topics, etc.)
+    - **Topic**: Topic en el que quiere publicar (si se deja vacío se usa el topic que se pase en el mensaje)
+    - **QoS**: QoS de los mensajes
+    - **Retain**: Valor de la flag "retained"
+    - **Name**: Nombre que se le da al nodo
 
-## Lectura/Escritura contra undispositivo BACnet (*Gateway*)(*NODE-RED*)
+La configuración de todos los parámetros de estos elementos se puede modificar en el fichero JSON de configuración que se carga en el contenedor nodered al crear el entorno de ejecución
+
+## Lectura/Escritura contra un dispositivo BACnet (*Gateway*)(*NODE-RED*)
 
 - **¡IMPORTANTE!** La lectura y escritura solo se puede hacer contra los objetos *BACnet* del *gateway* del tipo adecuado (en función de si son de lectura o escritura en la configuración del *gateway*)
 - **¡IMPORTANTE!** Para hacer este tipo de operaciones en *NODE-RED*, se necesita la paleta/modulo **node-red-contrib-bacnet** (instalada por defecto en el entorno proporcionado)
@@ -151,22 +180,9 @@ Configuración lectura:
       - *Port*: Puerto al que está conectado el *gateway* (por defecto 47808)
       - *adpu Timeout*: Tiempo de espera para el fallo del mensaje (por defecto 6000)
 
+- Si enlazamos el nodo de lectura a un nodo debug, podemos ver el mensaje en *NODE-RED* para poder trabajar con él
 - [Ampliación sobre objetos, tipos y tags](http://www.bacnet.org/Bibliography/ES-7-96/ES-7-96.htm)
 - Estas peticiones y respuestas, se pueden ver mediante *Wireshark*
-
-## Visualización de la red en **YABE**/**WIRESHARK** [(Más detalles)](https://www.domat-int.com/en/bacnet-a-brief-introduction-to-the-basics-pt-2)
-
-- Pasos para visualizar una red en YABE:
-    1. Entrar en el menú de añadir red haciendo click en la cruz verde ![Menú nueva red](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/a%C3%B1adirNuevaRed.PNG "Menú nueva red")
-    2. Indicar el puerto en el que se quiere añadir y la dirección de la red a la que está conectado el gateway ![Menú nueva red 2](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/a%C3%B1adirRed2.PNG "Menú nueva red 2)
-    3. YABE debería detectar automáticamente todos los dispositivos BACnet conectados a esa red y clickando encima, se verían todos sus objetos (ventana *Address space* ![Dispositivo visible](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/dispositivoVisible.PNG "Dispositivo visible")
-    4. En la ventana *Properties* podemos ver el contenido y los valores de todas las propiedades del elemento seleccionado en la ventana *Address space* ![Propiedades dispositivo](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/propiedadesDispositivo.PNG "Propiedades dispositivo") ![Propiedades objeto](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/propiedadesObjeto.PNG "Propiedades objeto")
-    5. Arrastrando los elementos a la ventana *Subscriptions, Periodic Polling, Events/Alarms* podemos visualizar sus valores en tiempo real (en casos como los enteros nos pedirá que le indiquemos el periodo de refresco de información) ![Valores en tiempo real](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/valoresTiempoReal.PNG "Valores en tiempo real")
-
-- Si se hace algún cambio en la configuración del *gateway*, hay que eliminar la red en *YABE* y volver a añadirla para ver reflejados los cambios
-
-- Si queremos ver el contenido de los mensajes para saber como es la estructura de un mensaje *BACnet*, podemos usar la herramienta *Wireshark* y filtrar los paquetes de la red por *BACnet*
-  - Aquí es donde veríamos los paquetes generados en la escritura/lectura mediante *NODE-RED*
 
 ## Notas
 
@@ -177,4 +193,4 @@ Configuración lectura:
   - El *LED L2* es para *MQTT*, no para *BACnet* como se indica en la documentación del fabricante (el funcionamiento es igual a como se indica)
   - El *LED L3* es para *BACnet*, no para *MQTT* como se indica en la documentación del fabricante (el funcionamiento es igual a como se indica)
 
-- Con este modelo no se pueden usar conexiones *BACnet/MTSP* mediante *RS485*, solo se puede usar *BACnet/IP*
+- Con el modelo de *gateway* usado para las pruebas no se pueden usar conexiones *BACnet/MTSP* mediante *RS485*, solo se puede usar *BACnet/IP*
