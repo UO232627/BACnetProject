@@ -1,6 +1,8 @@
 # DOCUMENTACIÓN BACNET
 
-## Configuración del *Gateway*
+## *GATEWAY*
+
+### Configuración
 
 1. Entrar en la configuración de conexiones
 ![Menú configuración conexiones](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/conexiones.PNG "Configuración de conexiones")
@@ -51,6 +53,7 @@
 ![Configuración MQTT](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/MQTTConfiguracion.PNG "Configuración MQTT")
 7. Configurar los accesos *BACnet* (igual para read y write)
 ![Menú configuración BACnet](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/BACnet.PNG "Menú configuración BACnet")
+    - **¡IMPORTANTE!** En los elementos definidos como de lectura, no se pueden hacer operaciones de escritura
     - **Data type**: Tipo del dato (seleccionar entre los predefinidos)
       - Para trabajar con float, usar los *analog*
     - **Eng. unit**: Unidad del dato (selecciona entre las predefinidas)
@@ -82,10 +85,12 @@ Cargar la configuración en el *gateway*. Para ello:
 
 ## Despliegue del entorno
 
-- Para el despliegue del entorno, se proporcionan un fichero docker-compose y un fichero Dockerfile con todo lo necesario para su ejecución
+- Para el despliegue del entorno, se proporcionan dos ficheros con todo lo necesario para su ejecución
+    - [**docker-compose.yml**](https://github.com/UO232627/gatewayProject/blob/main/docker/docker-compose.yml) - Configuración de los dos servicios que se quieren desplegar indicando puertos (por defecto los estandar) y las rutas de los ficheros necesarios para la configuración
+    - [**dockerfile**](https://github.com/UO232627/gatewayProject/blob/main/docker/nodered/dockerfile.dockerfile) - Añade los flows al contenedor e instala el paquete necesario para poder hacer operaciones *BACnet*
 - Además, son necesarios dos ficheros:
-    1. Un fichero de configuración con los *flows* de *NODE-RED* que se quieren cargar (se puede ver un ejemplo de este *flow* en la siguiente sección de la documentación)
-    2. Un fichero de configuración para cargar en el broker *Mosquitto* en el que se abre el acceso a direcciones externas
+    1. Un [fichero *JSON* de configuración con los *flows* de *NODE-RED*](https://github.com/UO232627/gatewayProject/blob/main/docker/nodered/flows/flows.json) que se quieren cargar (el *flow* de ejemplo se explicará en la siguiente sección de la documentación)
+    2. Un [fichero de configuración de *Mosquitto*](https://github.com/UO232627/gatewayProject/blob/main/docker/mosquitto/conf/mosquitto.conf) para abrir el acceso a direcciones externas
 - Antes de hacer el despliegue de los contenedores, hay que hacer el build de la imagen de *NODE-RED*
     - `docker-compose -d --build nodered`
 - Una vez creada la imagen ya se puede desplegar los contenedores
@@ -98,51 +103,53 @@ Cargar la configuración en el *gateway*. Para ello:
 - Los elementos del *flow* son:
   - **fromIAQ**: Nodo que recibe mensajes *MQTT*
   - **transformIntoJS**: Convierte el mensaje recibido en un objeto *JsvaScript*
-  - **separateMeasures**: Modifica el topic del mensaje con la cabecera en la que se va a publicar (con el UUID del dispositivo) y deja en el payload solo las medidas, eliminando la parte de información del dispositivo
-  - **splitMeasures**: Separa todas las medidas
-  - **editMessage**: Añade al topic el tipo de medida que es y pone el valor de la medida en el payload del mensaje
-  - **toBroker**: Envia los mensajes *MQTT* al broker
+  - **separateMeasures**: Modifica el topic del mensaje con la cabecera en la que se va a publicar (toBACnet/UUID del dispositivo) y deja en el payload solo las medidas, eliminando la parte de información del dispositivo
+  - **splitMeasures**: Separa todas las medidas para trabajar de forma independiente sobre ellas
+  - **editMessage**: Añade al topic el nombre de la medida y deja en el payload del mensaje el valor leido para esa medida
+  - **toBroker**: Envia los mensajes *MQTT* al broker (uno por cada medida a su topic correspondiente)
 
-## Creación de peticiones de lectura/escritura de prueba contra el *Gateway* (*NODE-RED*)
+- La configuración de todos los parámetros de estos elementos se puede modificar en el fichero JSON de configuración que se carga en el contenedor nodered al crear el entorno de ejecución
+
+## Lectura/Escritura contra undispositivo BACnet (*Gateway*)(*NODE-RED*)
 
 - **¡IMPORTANTE!** La lectura y escritura solo se puede hacer contra los objetos *BACnet* del *gateway* del tipo adecuado (en función de si son de lectura o escritura en la configuración del *gateway*)
-- **¡IMPORTANTE!** Para hacer este tipo de operaciones en *NODE-RED*, se necesita la paleta **node-red-contrib-bacnet**
+- **¡IMPORTANTE!** Para hacer este tipo de operaciones en *NODE-RED*, se necesita la paleta/modulo **node-red-contrib-bacnet** (instalada por defecto en el entorno proporcionado)
 
-- Configuración escritura:
-  - **Properties**
+Configuración escritura:
+  1. **Properties**
     - **Name**: Nombre del nodo
-    - **Type**: Tipo del valor (hay que seleccionar el mismo que se ha indicado en el objeto del *gateway*)
-    - **Instance**: Instancia del objeto al que se quiere acceder. Se le puede indicar nombre e index dentro del array de objetos del *gateway*
-  - **Value**
-    - **App-tag**: Tipo de dato
-    - **Value**: Valor que se quiere escribir
-  - **Properties**
-    - **Property**: Propiedad en la que se quiere escribir
+    - **Type**: Tipo del valor (hay que seleccionar el mismo que se ha indicado en el objeto del *gateway*. Esto puede verse desde *YABE*)
+    - **Instance**: Instancia del objeto al que se quiere acceder. Se le indica nombre e index para que se quede guardada (**¡IMPORTANTE!** El index no es el de su posición dentro del array de objetos del dispositivo, sino el index dentro de los objetos del mismo tipo) ![Index 1](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/index1.PNG "Index 1") ![Index 2](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/index2.PNG "Index 2")
+  2. **Value**
+    - **App-tag**: Tipo de dato (puede verse en *YABE* seleccionando la propiedad en la que queremos escribir en la ventana *Properties*) [Tag](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/tag.PNG "Tag") 
+    - **Value**: Valor que se quiere escribir (tiene que ser válido según su tipo)
+  3. **Properties**
+    - **Property**: Propiedad en la que se quiere escribir (puede verse el nombre en *YABE* seleccionando la propiedad en la que queremos escribir en la ventana *Properties*) 
     - **Priority**: [Prioridad de la escritura](https://www.domat-int.com/en/bacnet-a-brief-introduction-to-the-basics-part-4)
-  - **Device and Interface**
-    - **Device**: Dispositivo al que se quiere acceder. Hay que indicarle nombre y dirección IP (la del *gateway*)
-    - **Client**: Nodo al que se quiere acceder
-      - *Name*: Nombre del nodo
+  4. **Device and Interface**
+    - **Device**: Dispositivo al que se quiere acceder. Hay que indicarle nombre y dirección IP (la del *gateway* en este caso)
+    - **Client**:
+      - *Name*: Nombre que se le quiere dar
       - *Interface*: Dirección IP (la del router al que está conectado el *gateway*)
-      - *Broadcast*: Dirección de broadcast de la red a la que está conectado el *gateway*
-      - *Port*: Puerto al que está conectado el *gateway*
-      - *adpu Timeout*: Tiempo de espera para el fallo del mensaje
+      - *Broadcast*: Dirección de broadcast de la red a la que está conectado el *gateway* (X.X.X.255)
+      - *Port*: Puerto al que está conectado el *gateway* (por defecto 47808)
+      - *adpu Timeout*: Tiempo de espera para el fallo del mensaje (por defecto 6000)
 
-- Configuración lectura:
-  - **Properties**
+Configuración lectura:
+  1. **Properties**
     - **Name**: Nombre del nodo
-    - **Type**: Tipo del valor (hay que seleccionar el mismo que se ha indicado en el objeto del *gateway*)
-    - **Instance**: Instancia del objeto al que se quiere acceder. Se le puede indicar nombre e index dentro del array de objetos del *gateway*
-  - **Properties**
-    - **Property Id**: Propiedad en la que se quiere escribir
-  - **Device and Interface**
-    - **Device**: Dispositivo al que se quiere acceder. Hay que indicarle nombre y dirección IP (la del *gateway*)
-    - **Client**: Nodo al que se quiere acceder
-      - *Name*: Nombre del nodo
+    - **Type**: Tipo del valor (hay que seleccionar el mismo que se ha indicado en el objeto del *gateway*. Esto puede verse desde *YABE*)
+    - **Instance**: Instancia del objeto al que se quiere acceder. Se le indica nombre e index para que se quede guardada (**¡IMPORTANTE!** El index no es el de su posición dentro del array de objetos del dispositivo, sino el index dentro de los objetos del mismo tipo) ![Index 1](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/index1.PNG "Index 1") ![Index 2](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/index2.PNG "Index 2")
+  2. **Properties**
+    - **Property Id**: Propiedad en la que se quiere leer (puede verse el nombre en *YABE* seleccionando la propiedad en la que queremos escribir en la ventana *Properties*) 
+  3. **Device and Interface**
+    - **Device**: Dispositivo al que se quiere acceder. Hay que indicarle nombre y dirección IP (la del *gateway* en este caso)
+    - **Client**:
+      - *Name*: Nombre que se le quiere dar
       - *Interface*: Dirección IP (la del router al que está conectado el *gateway*)
-      - *Broadcast*: Dirección de broadcast de la red a la que está conectado el *gateway*
-      - *Port*: Puerto al que está conectado el *gateway*
-      - *adpu Timeout*: Tiempo de espera para el fallo del mensaje
+      - *Broadcast*: Dirección de broadcast de la red a la que está conectado el *gateway* (X.X.X.255)
+      - *Port*: Puerto al que está conectado el *gateway* (por defecto 47808)
+      - *adpu Timeout*: Tiempo de espera para el fallo del mensaje (por defecto 6000)
 
 - [Ampliación sobre objetos, tipos y tags](http://www.bacnet.org/Bibliography/ES-7-96/ES-7-96.htm)
 - Estas peticiones y respuestas, se pueden ver mediante *Wireshark*
@@ -161,7 +168,7 @@ Cargar la configuración en el *gateway*. Para ello:
 - Si queremos ver el contenido de los mensajes para saber como es la estructura de un mensaje *BACnet*, podemos usar la herramienta *Wireshark* y filtrar los paquetes de la red por *BACnet*
   - Aquí es donde veríamos los paquetes generados en la escritura/lectura mediante *NODE-RED*
 
-### Notas
+## Notas
 
 - [Página oficial de *BACnet* y documentación](http://www.bacnet.org/)
 
