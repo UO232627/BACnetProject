@@ -165,6 +165,8 @@ Configuración escritura:
       - *Broadcast*: Dirección de broadcast de la red a la que está conectado el *gateway* (X.X.X.255)
       - *Port*: Puerto al que está conectado el *gateway* (por defecto 47808)
       - *adpu Timeout*: Tiempo de espera para el fallo del mensaje (por defecto 6000)
+     
+**NOTA**: Cuando se escribe en un objeto int, el valor que se ve es el valor numérico de su representación en grupos de 8 bytes (ej. si hacemos la escritura de un entero de valor 4, en *YABE* nosotros veríamos 1024). A la hora de hacer un publish en el broker, veríamos el valor numérico normal
 
 Configuración lectura:
   1. **Properties**
