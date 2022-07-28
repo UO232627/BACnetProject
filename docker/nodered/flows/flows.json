@@ -120,6 +120,122 @@
         "wires": []
     },
     {
+        "id": "bb5c8dec4075dca6",
+        "type": "inject",
+        "z": "8d3f0afe2a5455f1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 160,
+        "wires": [
+            [
+                "0876bb6eb7e63723"
+            ]
+        ]
+    },
+    {
+        "id": "0876bb6eb7e63723",
+        "type": "BACnet-Read",
+        "z": "8d3f0afe2a5455f1",
+        "name": "Lectura",
+        "objectType": "2",
+        "instance": "3b91776736602dc6",
+        "propertyId": "85",
+        "device": "4cde29161c85f4aa",
+        "server": "d58ab7a57785c9c6",
+        "multipleRead": false,
+        "x": 260,
+        "y": 160,
+        "wires": [
+            [
+                "22a5962a7d40515a"
+            ]
+        ]
+    },
+    {
+        "id": "dbd836aa3f1e53f3",
+        "type": "BACnet-Write",
+        "z": "8d3f0afe2a5455f1",
+        "name": "Escritura",
+        "objectType": "45",
+        "instance": "3b91776736602dc6",
+        "valueTag": "3",
+        "valueValue": "123",
+        "propertyId": "85",
+        "priority": "",
+        "device": "4cde29161c85f4aa",
+        "server": "d58ab7a57785c9c6",
+        "multipleWrite": false,
+        "x": 260,
+        "y": 220,
+        "wires": [
+            [
+                "22a5962a7d40515a"
+            ]
+        ]
+    },
+    {
+        "id": "580c932b407144b8",
+        "type": "inject",
+        "z": "8d3f0afe2a5455f1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 220,
+        "wires": [
+            [
+                "dbd836aa3f1e53f3"
+            ]
+        ]
+    },
+    {
+        "id": "22a5962a7d40515a",
+        "type": "debug",
+        "z": "8d3f0afe2a5455f1",
+        "name": "debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 450,
+        "y": 160,
+        "wires": []
+    },
+    {
         "id": "9bb8382a5cc0f7e3",
         "type": "mqtt-broker",
         "name": "IAQ",
@@ -144,5 +260,26 @@
         "willPayload": "",
         "willMsg": {},
         "sessionExpiry": ""
+    },
+    {
+        "id": "3b91776736602dc6",
+        "type": "BACnet-Instance",
+        "name": "prueba",
+        "instanceAddress": "3"
+    },
+    {
+        "id": "4cde29161c85f4aa",
+        "type": "BACnet-Device",
+        "name": "Gateway",
+        "deviceAddress": "172.16.30.162"
+    },
+    {
+        "id": "d58ab7a57785c9c6",
+        "type": "BACnet-Client",
+        "name": "Red",
+        "adpuTimeout": "3000",
+        "port": "47808",
+        "interface": "172.16.30.161",
+        "broadcastAddress": "172.16.30.255"
     }
 ]
