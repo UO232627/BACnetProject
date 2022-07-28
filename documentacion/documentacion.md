@@ -92,7 +92,7 @@ Cargar la configuración en el *gateway*. Para ello:
     1. Un [fichero *JSON* de configuración con los *flows* de *NODE-RED*](https://github.com/UO232627/gatewayProject/blob/main/docker/nodered/flows/flows.json) que se quieren cargar (el *flow* de ejemplo se explicará en la siguiente sección de la documentación)
     2. Un [fichero de configuración de *Mosquitto*](https://github.com/UO232627/gatewayProject/blob/main/docker/mosquitto/conf/mosquitto.conf) para abrir el acceso a direcciones externas
 - Antes de hacer el despliegue de los contenedores, hay que hacer el build de la imagen de *NODE-RED*
-    - `docker-compose -d --build nodered`
+    - `docker-compose up -d --build nodered`
 - Una vez creada la imagen ya se puede desplegar los contenedores
     - `docker-compose up`
 
