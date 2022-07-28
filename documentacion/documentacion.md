@@ -1,4 +1,4 @@
-# DOCUMENTACIÓN CONEXIÓN GATEWAY
+# DOCUMENTACIÓN BACNET
 
 ## Configuración del *Gateway*
 
@@ -74,9 +74,26 @@ Cargar la configuración en el *gateway*. Para ello:
 9. Conectar el *gateway* al router
 10. Comprobar que si añadimos la red del router a **YABE**, detecta automáticamente el *gateway*
 
+### Exportar/Importar configuraciones
+
+- Para exportar o importar configuraciones del *gateway* solo hay que copiar el directorio con la configuración que queramos en el directorio *Projects* dentro de la instalación de la interfaz de configuración
+    - Ruta de ejemplo: `C:\Program Files (x86)\ADFweb\Compositor_SW67938\Projects`
+- Si se quiere hacer una copia de alguna configuración, copiar y pegar dentro del directorio y cambiar el nombre por el que se quiera
+
+## Despliegue del entorno
+
+- Para el despliegue del entorno, se proporcionan un fichero docker-compose y un fichero Dockerfile con todo lo necesario para su ejecución
+- Además, son necesarios dos ficheros:
+    1. Un fichero de configuración con los *flows* de *NODE-RED* que se quieren cargar (se puede ver un ejemplo de este *flow* en la siguiente sección de la documentación)
+    2. Un fichero de configuración para cargar en el broker *Mosquitto* en el que se abre el acceso a direcciones externas
+- Antes de hacer el despliegue de los contenedores, hay que hacer el build de la imagen de *NODE-RED*
+    - `docker-compose -d --build nodered`
+- Una vez creada la imagen ya se puede desplegar los contenedores
+    - `docker-compose up`
+
 ## Conversión de mensajes MQTT del IAQ al *Gateway* (*NODE-RED*)
 
-- Para la transformación de mensajes mediante *NODE-RED*, se puede usar un *flow* de ejemplo como [este](https://github.com/UO232627/gatewayProject/blob/main/splitMQTT.json)
+- Para la transformación de mensajes mediante *NODE-RED*, se puede usar un *flow* en *NODE-RED* como este [ejemplo](https://github.com/UO232627/gatewayProject/blob/main/splitMQTT.json)
 
 - Los elementos del *flow* son:
   - **fromIAQ**: Nodo que recibe mensajes *MQTT*
