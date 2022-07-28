@@ -96,6 +96,8 @@ Cargar la configuración en el *gateway*. Para ello:
 - Una vez creada la imagen ya se puede desplegar los contenedores
     - `docker-compose up`
 
+Mantener los nombres de los ficheros. En caso de modificarlos, cambiar la referencia correspondiente en el docker-compose y el dockerfile
+
 ## Visualización de la red en **YABE**/**WIRESHARK** [(Más detalles)](https://www.domat-int.com/en/bacnet-a-brief-introduction-to-the-basics-pt-2)
 
 - Pasos para visualizar una red en YABE:
