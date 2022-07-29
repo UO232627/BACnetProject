@@ -150,24 +150,24 @@ La configuración de todos los parámetros de estos elementos se puede modificar
 - **¡IMPORTANTE!** Para hacer este tipo de operaciones en *NODE-RED*, se necesita la paleta/modulo **node-red-contrib-bacnet** (instalada por defecto en el entorno proporcionado)
 
 Configuración escritura:
-  1. **Properties**
-    - **Name**: Nombre del nodo
-    - **Type**: Tipo del valor (hay que seleccionar el mismo que se ha indicado en el objeto del *gateway*. Esto puede verse desde *YABE*)
-    - **Instance**: Instancia del objeto al que se quiere acceder. Se le indica nombre e index para que se quede guardada (**¡IMPORTANTE!** El index no es el de su posición dentro del array de objetos del dispositivo, sino el index dentro de los objetos del mismo tipo) ![Index 1](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/index1.PNG "Index 1") ![Index 2](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/index2.PNG "Index 2")
-  2. **Value**
-    - **App-tag**: Tipo de dato (puede verse en *YABE* seleccionando la propiedad en la que queremos escribir en la ventana *Properties*) [Tag](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/tag.PNG "Tag") 
-    - **Value**: Valor que se quiere escribir (tiene que ser válido según su tipo)
-  3. **Properties**
-    - **Property**: Propiedad en la que se quiere escribir (puede verse el nombre en *YABE* seleccionando la propiedad en la que queremos escribir en la ventana *Properties*) 
-    - **Priority**: [Prioridad de la escritura](https://www.domat-int.com/en/bacnet-a-brief-introduction-to-the-basics-part-4)
-  4. **Device and Interface**
-    - **Device**: Dispositivo al que se quiere acceder. Hay que indicarle nombre y dirección IP (la del *gateway* en este caso)
-    - **Client**:
-      - *Name*: Nombre que se le quiere dar
-      - *Interface*: Dirección IP (la del router al que está conectado el *gateway*)
-      - *Broadcast*: Dirección de broadcast de la red a la que está conectado el *gateway* (X.X.X.255)
-      - *Port*: Puerto al que está conectado el *gateway* (por defecto 47808)
-      - *adpu Timeout*: Tiempo de espera para el fallo del mensaje (por defecto 6000)
+1. **Properties**
+- **Name**: Nombre del nodo
+- **Type**: Tipo del valor (hay que seleccionar el mismo que se ha indicado en el objeto del *gateway*. Esto puede verse desde *YABE*)
+- **Instance**: Instancia del objeto al que se quiere acceder. Se le indica nombre e index para que se quede guardada (**¡IMPORTANTE!** El index no es el de su posición dentro del array de objetos del dispositivo, sino el index dentro de los objetos del mismo tipo) ![Index 1](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/index1.PNG "Index 1") ![Index 2](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/index2.PNG "Index 2")
+2. **Value**
+- **App-tag**: Tipo de dato (puede verse en *YABE* seleccionando la propiedad en la que queremos escribir en la ventana *Properties*) ![Tag](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/tag.PNG "Tag") 
+- **Value**: Valor que se quiere escribir (tiene que ser válido según su tipo)
+3. **Properties**
+- **Property**: Propiedad en la que se quiere escribir (puede verse el nombre en *YABE* seleccionando la propiedad en la que queremos escribir en la ventana *Properties*) 
+- **Priority**: [Prioridad de la escritura](https://www.domat-int.com/en/bacnet-a-brief-introduction-to-the-basics-part-4)
+4. **Device and Interface**
+- **Device**: Dispositivo al que se quiere acceder. Hay que indicarle nombre y dirección IP (la del *gateway* en este caso)
+- **Client**:
+  - *Name*: Nombre que se le quiere dar
+  - *Interface*: Dirección IP (la del router al que está conectado el *gateway*)
+  - *Broadcast*: Dirección de broadcast de la red a la que está conectado el *gateway* (X.X.X.255)
+  - *Port*: Puerto al que está conectado el *gateway* (por defecto 47808)
+  - *adpu Timeout*: Tiempo de espera para el fallo del mensaje (por defecto 6000)
      
 **NOTA**: Cuando se escribe en un objeto int, cada unidad se representa con el valor 256. Es decir, si escribimos en *NODE-RED* el valor 4, en la propiedad *present-value* del gateway veríamos 1024. Sin embargo, a la hora de publicar al *broker MQTT*, el valor que se visualiza es el correcto, es decir, 4.
 
