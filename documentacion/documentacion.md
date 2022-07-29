@@ -64,16 +64,19 @@
 ![Configuración BACnet](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/BACnetConfiguracion.PNG "Configuración BACnet")
 8. (**Solo la primera vez, luego se puede hacer sin desconectar el dispositivo ni teniendo que cambiar la posición del switch**)
 ![Menú configuración carga](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/carga.PNG "Menú configuración carga")
+
 Cargar la configuración en el *gateway*. Para ello:
-    - Apagar el *gateway*
-    - Pone el switch en la posición ON
-    - Encender el *gateway*
-    - Conectar el cable ethernet del PC al *gateway*
-    - Indicar la dirección *192.168.2.205* (**¡IMPORTANTE!** La carga de configuraciones posteriores se hará indicando la dirección IP con la que se ha configurado)
-    - Seleccionar las operaciones a realizar (actualización de firmware, cargar configuración o ambas) y ejecutar
-    - Apagar el *gateway*
-    - Poner el switch en la posición OFF
+- Apagar el *gateway*
+- Pone el switch en la posición ON
+- Encender el *gateway*
+- Conectar el cable ethernet del PC al *gateway*
+- Indicar la dirección *192.168.2.205* (**¡IMPORTANTE!** La carga de configuraciones posteriores se hará indicando la dirección IP con la que se ha configurado)
+- Seleccionar las operaciones a realizar (actualización de firmware, cargar configuración o ambas) y ejecutar
+- Apagar el *gateway*
+- Poner el switch en la posición OFF
+    
 ![Configuración carga](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/cargaConfiguracion.PNG "Configuración carga")
+
 9. Conectar el *gateway* al router
 10. Comprobar que si añadimos la red del router a **YABE**, detecta automáticamente el *gateway*
 
