@@ -104,17 +104,17 @@ Mantener los nombres de los ficheros. En caso de modificarlos, cambiar la refere
 ## Visualización de la red en **YABE**/**WIRESHARK** [(Más detalles)](https://www.domat-int.com/en/bacnet-a-brief-introduction-to-the-basics-pt-2)
 
 - Pasos para visualizar una red en YABE:
-    1. Entrar en el menú de añadir red haciendo click en la cruz verde ![Menú nueva red](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/a%C3%B1adirNuevaRed.PNG "Menú nueva red")
+    1. Entrar en el menú de añadir red haciendo click en la cruz verde bajo la barra de herramientas ![Menú nueva red](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/a%C3%B1adirNuevaRed.PNG "Menú nueva red")
     2. Indicar el puerto en el que se quiere añadir y la dirección de la red a la que está conectado el gateway ![Menú nueva red 2](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/a%C3%B1adirRed2.PNG "Menú nueva red 2")
-    3. YABE debería detectar automáticamente todos los dispositivos BACnet conectados a esa red y clickando encima, se verían todos sus objetos (ventana *Address space* ![Dispositivo visible](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/dispositivoVisible.PNG "Dispositivo visible")
-    4. En la ventana *Properties* podemos ver el contenido y los valores de todas las propiedades del elemento seleccionado en la ventana *Address space* ![Propiedades dispositivo](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/propiedadesDispositivo.PNG "Propiedades dispositivo") ![Propiedades objeto](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/propiedadesObjeto.PNG "Propiedades objeto")
+    3. YABE debería detectar automáticamente todos los dispositivos BACnet conectados a esa red ysus objetos ![Dispositivo visible](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/dispositivoVisible.PNG "Dispositivo visible")
+    4. En la ventana *Properties* podemos ver el contenido y los valores de todas las propiedades del elemento seleccionado ![Propiedades dispositivo](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/propiedadesDispositivo.PNG "Propiedades dispositivo") ![Propiedades objeto](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/propiedadesObjeto.PNG "Propiedades objeto")
     5. Arrastrando los elementos a la ventana *Subscriptions, Periodic Polling, Events/Alarms* podemos visualizar sus valores en tiempo real (en casos como los enteros nos pedirá que le indiquemos el periodo de refresco de información) ![Valores en tiempo real](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/valoresTiempoReal.PNG "Valores en tiempo real")
 
 - Si se hace algún cambio en la configuración del *gateway*, hay que eliminar la red en *YABE* y volver a añadirla para ver reflejados los cambios
 
 Si queremos ver el contenido de los mensajes para saber como es la estructura de un mensaje *BACnet*, podemos usar la herramienta *Wireshark*
-- Comenzamos a capturar *Ethernet* (click derecho - Iniciar captura) ![wiresharkEthernet](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/wiresharkEthernet.PNG "wiresharkEthernet")
-- Una vez iniciada la captura, podemos filtrar los paquetes que interceptamos, por ejemplo MQTT y BACnet que son los que interesan en este caso ![wiresharkFiltro](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/wiresharkFiltro.PNG "wiresharkFiltro")
+- Comenzamos a capturar la red que nos interesa monitorizar, en nuestro caso *Ethernet* (click derecho - Iniciar captura) ![wiresharkEthernet](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/wiresharkEthernet.PNG "wiresharkEthernet")
+- Una vez iniciada la captura, podemos filtrar los paquetes que interceptamos, por ejemplo MQTT y BACnet en este caso ![wiresharkFiltro](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/wiresharkFiltro.PNG "wiresharkFiltro")
 - Aquí se puede ver toda la información que contiene un mensaje. Si queremos ir al *"valor"* de la petición, debemos abrir el apartado APDU ![wiresharkMensaje](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/wiresharkMensaje.PNG "wiresharkMensaje") ![wiresharkAPDU](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/wiresharkAPDU.PNG "wiresharkAPDU")
     - En este caso, nuestro valor es *"Present Value (real): 0"*
 
