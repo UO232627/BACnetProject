@@ -201,3 +201,12 @@ Configuración lectura:
   - El *LED L3* es para *BACnet*, no para *MQTT* como se indica en la documentación del fabricante (el funcionamiento es igual a como se indica)
 
 - Con el modelo de *gateway* usado para las pruebas no se pueden usar conexiones *BACnet/MTSP* mediante *RS485*, solo se puede usar *BACnet/IP*
+
+
+## DESPLIEGUE DEL ENTORNO EN UNA RASPBERRY PI
+
+AQUÍ EXPLICAR QUE ES LO QUE SE QUIERE HACER Y CÓMO
+
+### Configuración de la rapsberry pi como punto de acceso inalámbrico
+
+https://www.raspberrypi.com/documentation/computers/configuration.html#setting-up-a-routed-wireless-access-point
