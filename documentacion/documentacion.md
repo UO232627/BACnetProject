@@ -220,3 +220,5 @@ https://hub.docker.com/r/nodered/node-red
 https://hub.docker.com/_/eclipse-mosquitto/
 
 https://phoenixnap.com/kb/docker-on-raspberry-pi
+
+https://fh1ch.github.io/node-bacstack/bacstack.html#.writeProperty
