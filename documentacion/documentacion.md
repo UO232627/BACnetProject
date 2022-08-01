@@ -212,3 +212,11 @@ AQUÍ EXPLICAR QUE ES LO QUE SE QUIERE HACER Y CÓMO
 https://www.raspberrypi.com/documentation/computers/configuration.html#setting-up-a-routed-wireless-access-point
 
 A node-red se accede desde 192.168.4.1:1880
+
+https://jfrog.com/connect/post/install-docker-compose-on-raspberry-pi/
+
+https://hub.docker.com/r/nodered/node-red
+
+https://hub.docker.com/_/eclipse-mosquitto/
+
+https://phoenixnap.com/kb/docker-on-raspberry-pi
