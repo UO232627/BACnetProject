@@ -210,3 +210,5 @@ AQUÍ EXPLICAR QUE ES LO QUE SE QUIERE HACER Y CÓMO
 ### Configuración de la rapsberry pi como punto de acceso inalámbrico
 
 https://www.raspberrypi.com/documentation/computers/configuration.html#setting-up-a-routed-wireless-access-point
+
+A node-red se accede desde 192.168.4.1:1880
