@@ -109,7 +109,7 @@ wpa_pairwise=TKIP
 rsn_pairwise=CCMP
 EOF
 
-sudo echo "El sistema se reiniciará en breves segundos..."
+sudo echo "Configuración del punto de acceso finalizada. El sistema se reiniciará en breves segundos..."
 sleep 10
 
 sudo systemctl reboot
