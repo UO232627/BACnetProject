@@ -213,7 +213,7 @@ Como se ha puede ver en el apartado [conversiones de datos](https://github.com/U
 
 - El primer paso para la creación de nuestro entorno es tener una *raspberry* operativa. Para ello, nos descargamos el programa [Raspberry PI Imager](https://www.raspberrypi.com/software/).
 - Una vez descargado e instalado, insertamos la *SD* o el dispositivo de almacenamiento que queramos usar para nuestro sistema operativo
-- En el apartado *Operating System*, seleccionamos el *SO* que queramos instalar. En nuestro caso, como no necesitamos una interfaz de usuario, instalaremos la versión *Lite* de 64 bytes
+- En el apartado *Operating System*, seleccionamos el *SO* que queramos instalar. En nuestro caso, como no necesitamos una interfaz de usuario, instalaremos la versión *Lite* de 64-bit
 
 ![Imager SO 1](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/imagerSO1.PNG "Imager SO 1")
 ![Imager SO 2](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/imagerSO2.PNG "Imager SO 2")
