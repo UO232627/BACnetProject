@@ -233,7 +233,7 @@ Como se ha puede ver en el apartado [conversiones de datos](https://github.com/U
 
 Para la configuración de nuestro entorno, necesitamos varios [scripts](https://github.com/UO232627/BACnetProject/tree/main/files/scripts) y [ficheros](https://github.com/UO232627/BACnetProject/tree/main/files/docker) necesarios para su ejecución.
 
-Para añadirlos a la *raspberry*, nos conectamos mediante *SSH* con un programa como [*MobaXterm*](https://mobaxterm.mobatek.net/download.html), por ejemplo. Para ello, con el propio *MobaXterm tenemos una herramienta de escaneo de la red.
+Para añadirlos a la *raspberry*, nos conectamos mediante *SSH* con un programa como [*MobaXterm*](https://mobaxterm.mobatek.net/download.html), por ejemplo. Para ello, con el propio *MobaXterm* tenemos una herramienta de escaneo de la red.
 
 ![Escaner red](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/mobaHerramientaEscaner.PNG "Escaner red")
 ![Red escaneada](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/mobaEscaneada.PNG "Red escaneada")
