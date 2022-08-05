@@ -196,7 +196,7 @@ Configuración lectura:
 - [Página oficial de *BACnet* y documentación](http://www.bacnet.org/)
 
 - La [documentación del fabricante](https://www.adfweb.com/download/filefold/MN67938_ENG.pdf) del *gateway* está desactualizada
-  - Se indica que el *LED L4* no se usa, pero mientras el *gateway* no esté conectado al broker, se antendrá encendida (**esto hay que verificarlo ya que no estoy completamente seguro de si es por la conexión al broker o también se apagaría con la conexión a un dispositivo *BACnet***)
+  - Se indica que el *LED L4* no se usa, pero mientras el *gateway* no esté conectado al broker, se mantendrá encendida (**esto hay que verificarlo ya que no estoy completamente seguro de si es por la conexión al broker o también se apagaría con la conexión a un dispositivo *BACnet***)
   - El *LED L2* es para *MQTT*, no para *BACnet* como se indica en la documentación del fabricante (el funcionamiento es igual a como se indica)
   - El *LED L3* es para *BACnet*, no para *MQTT* como se indica en la documentación del fabricante (el funcionamiento es igual a como se indica)
 
