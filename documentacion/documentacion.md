@@ -205,9 +205,7 @@ Configuración lectura:
 
 ## PRUEBA DE CONCEPTO - DESPLIEGUE DEL ENTORNO EN UNA RASPBERRY PI
 
-Como se ha puede ver en el apartado de conversiones de datos y lecturas/escrituras, para poder integrar dispositivos *MQTT* como el *IAQ* con otros BACnet, es necesario tratar los datos y usar ciertos programas. Para facilitar esto, se ha creado un entorno de funcionamiento mediante una *Raspberry Pi* en el que todo lo necesario está preparado para su uso directo.
-
-Los pasos para preparar este entorno y como usarlo se explicarán a continuación.
+Como se ha puede ver en el apartado [conversiones de datos](https://github.com/UO232627/BACnetProject/blob/main/documentacion/documentacion.md#conversi%C3%B3n-de-mensajes-mqtt-del-iaq-al-gateway-en-local-node-red) y [lecturas/escrituras](https://github.com/UO232627/BACnetProject/blob/main/documentacion/documentacion.md#lecturaescritura-contra-un-dispositivo-bacnet-en-local-gatewaynode-red), para poder integrar dispositivos *MQTT* como el *IAQ* con otros BACnet, es necesario tratar los datos y usar ciertos programas. Para facilitar esto, se ha creado un entorno de funcionamiento mediante una *Raspberry Pi* en el que todo lo necesario está preparado para su uso directo.
 
 ### Configuración de la *rapsberry pi*
 
@@ -290,7 +288,7 @@ Una vez finalizada la ejecución de ambos scripts, la red debería estar visible
 
 #### Configuración de Docker y sus contenedores
 
-El segundo paso en la configuración de la *raspberry* es la dockerización del entorno y la creación de los contenedores necesarios para su correcto funcionamiento. De manera similar a la prueba de concepto hecha en local, se crearán dos contenedores, uno para añadir un cliente *NODE-RED* y otro para la creación de un *broker MQTT* mediante *mosquitto*.
+El segundo paso en la configuración de la *raspberry* es la dockerización del entorno y la creación de los contenedores necesarios para su correcto funcionamiento. De manera similar a la [prueba inicial hecha en local](https://github.com/UO232627/BACnetProject/blob/main/documentacion/documentacion.md#despliegue-del-entorno-en-local), se crearán dos contenedores, uno para añadir un cliente *NODE-RED* y otro para la creación de un *broker MQTT* mediante *mosquitto*.
 
 El proceso para la creación es similar al hecho en local, solo que esta vez se hace con un [script](https://github.com/UO232627/BACnetProject/blob/main/files/scripts/environment.sh) que nos instala todos los paquetes y dependencias necesarias para su instalación.
 
@@ -300,7 +298,7 @@ Una vez el script termine de ejecutarse, el entorno de trabajo ya estará dispon
 
 **NOTA: La prueba de concepto está configurada para que el script cargue en *NODE-RED* un [flow de ejemplo](https://github.com/UO232627/BACnetProject/blob/main/files/docker/nodered/flows/flows.json), pero podría configurarse para que no cargue nada y empezar a hacer un flow desde cero**
 
-#### Conexión a la red y sistema de ejemplo
+### Conexión a la red y sistema de ejemplo
 
 Dependiendo de si el nuevo entorno se quiere añadir a un sistema ya en funcionamiento o se quiere crear un nuevo entorno completamente aislado, podría interesarnos la conexión de los dispositivos vía *ethernet* o vía punto de acceso.
 
@@ -323,9 +321,9 @@ Con esta configuración, nuestro *IAQ* enviaría mensajes *MQTT* al broker *mosq
 
 **NOTA: El acceso a *NODE-RED* se hace desde 192.168.4.1:1880 con un dispositivo con conexión a la red generada por el punto de acceso de la *raspberry***
 
-Conceptualmente es muy similar al que se usó en la prueba en local. Los únicos cambios son las direcciones IP de los dispositivos conectados (tanto del *IAQ* como del dispositivo *BACnet*) y la separación de los elementos del mensaje original.
+Conceptualmente es muy similar al que se usó en la [prueba en local](https://github.com/UO232627/BACnetProject/blob/main/documentacion/documentacion.md#conversi%C3%B3n-de-mensajes-mqtt-del-iaq-al-gateway-en-local-node-red). Los únicos cambios son las direcciones IP de los dispositivos conectados (tanto del *IAQ* como del dispositivo *BACnet*) y cómo se hace la separación de los elementos del mensaje original.
 
-Esta separación, ahora se hace mediante una función para cada medida. Los parametros de configuración que se almacenan en `msg.payload.values` son:
+Esta separación, ahora se hace mediante una función para cada medida. Los parametros de configuración que se almacenan en `msg.payload.values` para la [escritura BACnet](https://github.com/UO232627/BACnetProject/blob/main/documentacion/documentacion.md#lecturaescritura-contra-un-dispositivo-bacnet-en-local-gatewaynode-red) son:
 
 ```
 msg.payload.values = [
@@ -337,4 +335,4 @@ return msg;
 - *type*: Correspondiente al *app-tag* del módulo de escritura BACnet
 - *value*: Valor que se quiere escribir en el dispositivo
 
-Una vez procesado el mensaje *MQTT*, se escribe en el dispositivo BACnet y se envían las medidas de manera individual de nuevo al broker *MQTT* con un tópic individual para cada medida, dentro de un topic por cada ID de un *IAQ*. En este punto, ya podemos leer en YABE las propiedades de cada objeto del dispositivo para comprobar los valores ya escritos.
+Una vez procesado el mensaje *MQTT*, se escribe en el dispositivo BACnet y se envían las medidas de manera individual de nuevo al broker *MQTT* con un tópic individual para cada medida, dentro de un topic por cada ID de un *IAQ*. En este punto, ya podemos [leer en YABE](https://github.com/UO232627/BACnetProject/blob/main/documentacion/documentacion.md#visualizaci%C3%B3n-de-la-red-en-yabewireshark-en-local-m%C3%A1s-detalles) las propiedades de cada objeto del dispositivo para comprobar los valores ya escritos.
