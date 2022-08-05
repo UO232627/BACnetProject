@@ -213,7 +213,7 @@ Los pasos para preparar este entorno y como usarlo se explicarán a continuació
 
 Para la configuración de nuestro entorno, necesitamos varios [scripts](https://github.com/UO232627/BACnetProject/tree/main/files/scripts) y [ficheros](https://github.com/UO232627/BACnetProject/tree/main/files/docker) necesarios para su ejecución.
 
-Para añadirlos a la *raspberry*, nos conectamos mediante *SSH* con un programa como *MobaXTerm* por ejemplo. Una vez conectados, nos logueamos con nuestro usuario y añadimos el directorio [*files*](https://github.com/UO232627/BACnetProject/tree/main/files) en el directorio raíz del usuario.
+Para añadirlos a la *raspberry*, nos conectamos mediante *SSH* con un programa como *MobaXTerm*, por ejemplo. Una vez conectados, nos logueamos con nuestro usuario y añadimos el directorio [*files*](https://github.com/UO232627/BACnetProject/tree/main/files) en el directorio raíz del usuario.
 
 #### Punto de acceso inalámbrico
 
@@ -229,11 +229,13 @@ Contenido de los scripts y configuración:
 - [access_point.sh](https://github.com/UO232627/BACnetProject/blob/main/files/scripts/acces_point.sh): Script que configura el punto de acceso wifi. Se debe ejecutar despues de haber actualizado el sistema. Este script tiene varias configuraciones que se pueden modificar:
     - *dhcpcd.conf*: Al final de este fichero, podemos indicar la dirección IP (estática) que queremos que tenga nuestro entorno de funcionamiento, modificando el valor del parámetro en las últimas líneas.
    
-        `interface wlan0` \
-        &nbsp;&nbsp;&nbsp;&nbsp;`static ip_address=192.168.4.1/24` \
-        &nbsp;&nbsp;&nbsp;&nbsp;`nohook wpa_supplicant`
-            
-        En este caso, la dirección es 192.168.4.1.
+   ```
+   interface wlan0
+        static ip_address=192.168.4.1/24
+        nohook wpa_supplicant
+   ```
+        
+   En este caso, la dirección es de la red es 192.168.4.1.
 
     - *dnsmasq.conf*: Aquí se puede indicar el rango de direcciones que se quiere tener para los nuevos dispositivos que se conecten. Esto podemos configurarlo en la línea `dhcp-range=192.168.4.2,192.168.4.20,255.255.255.0,24h`. Aquí se puede indicar la dirección inicial (192.168.4.2), la final (192.168.4.20), la máscara de subred (255.255.255.0) y el tiempo que se da la dirección (24 horas). En este fichero también podemos indicar el alias que se le quiere dar a la red. En caso de haber modificado la dirección en el fichero *dhcpcd.conf*, también deberíamos cambiarla aquí `address=/gw.wlan/192.168.4.1`.
     - *hostapd.conf*: En este fichero se configura todo lo relacionado con la red wifi que se va a ver de cara a los dispositivos. Los parámetros más susceptibles a ser configurados son:
@@ -248,9 +250,9 @@ Contenido de los scripts y configuración:
 
 Una vez finalizada la ejecución de ambos scripts, la red debería estar visible para conectarse mediante cualquier dispositivo, introduciendo la contraseña que se haya configurado.
 
-#### Configuración de docker y sus contenedores
+#### Configuración de Docker y sus contenedores
 
-El segundo paso en la configuración de la *raspberry* es la dockerización del entorno y la creación de los contenedores necesarios para su correcto funcionamiento. De manera similar a la prueba de concepto hecha en local, se crearán dos contenedores, uno para añadir un cliente *NODE-RED* y otro para la creación de un broker *MQTT* mediante *mosquitto*.
+El segundo paso en la configuración de la *raspberry* es la dockerización del entorno y la creación de los contenedores necesarios para su correcto funcionamiento. De manera similar a la prueba de concepto hecha en local, se crearán dos contenedores, uno para añadir un cliente *NODE-RED* y otro para la creación de un *broker MQTT* mediante *mosquitto*.
 
 El proceso para la creación es similar al hecho en local, solo que esta vez se hace con un [script](https://github.com/UO232627/BACnetProject/blob/main/files/scripts/environment.sh) que nos instala todos los paquetes y dependencias necesarias para su instalación.
 
@@ -285,7 +287,12 @@ Conceptualmente es muy similar al que se usó en la prueba en local. Los únicos
 
 Esta separación, ahora se hace mediante una función para cada medida. Los parametros de configuración que se almacenan en `msg.payload.values` son:
 
-![Configuración escritura](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/configNode.PNG "Configuración escritura")
+```
+msg.payload.values = [
+    { type: 4, value: msg.payload[0].v }
+]
+return msg;
+```
 
 - *type*: Correspondiente al *app-tag* del módulo de escritura BACnet
 - *value*: Valor que se quiere escribir en el dispositivo
