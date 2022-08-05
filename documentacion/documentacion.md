@@ -270,8 +270,7 @@ Contenido de los scripts y configuración:
         static ip_address=192.168.4.1/24
         nohook wpa_supplicant
    ```
-        
-   En este caso, la dirección es de la red es 192.168.4.1.
+   Como se puede ver, en este caso la dirección de red es 192.168.4.1. En caso de que entre en conflicto con alguna otra red o subred, habría que seleccionar otra y cambiar la configuración en los demás apartados correspondientes.
 
     - *dnsmasq.conf*: Aquí se puede indicar el rango de direcciones que se quiere tener para los nuevos dispositivos que se conecten. Esto podemos configurarlo en la línea `dhcp-range=192.168.4.2,192.168.4.20,255.255.255.0,24h`. Aquí se puede indicar la dirección inicial (192.168.4.2), la final (192.168.4.20), la máscara de subred (255.255.255.0) y el tiempo que se da la dirección (24 horas). En este fichero también podemos indicar el alias que se le quiere dar a la red. En caso de haber modificado la dirección en el fichero *dhcpcd.conf*, también deberíamos cambiarla aquí `address=/gw.wlan/192.168.4.1`.
     - *hostapd.conf*: En este fichero se configura todo lo relacionado con la red wifi que se va a ver de cara a los dispositivos. Los parámetros más susceptibles a ser configurados son:
