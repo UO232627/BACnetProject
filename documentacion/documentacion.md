@@ -270,7 +270,7 @@ Dependiendo de si el nuevo entorno se quiere añadir a un sistema ya en funciona
 
 En el ejemplo hecho para la prueba de concepto, nos encontramos con un esquema similar al siguiente:
 
-![Esquema entorno](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/esquemaEntornoPruebaConcepto.png "Esquema entorno")
+![Esquema entorno](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/esquemaEntorno.png "Esquema entorno")
 
 En este caso y como se puede ver por las direcciones, los dispositivos están conectados de la siguiente manera:
 - *IAQ*: Conectado vía Wifi al punto de acceso generado por la *raspberry*
