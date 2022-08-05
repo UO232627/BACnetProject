@@ -244,6 +244,8 @@ Contenido de los scripts y configuración:
        
     - Para la ejecución del script usar el comando `sudo sh ./files/scripts/access_point.sh`
 
+**NOTA: Si se quiere evitar que los clientes conectados al punto de acceso puedan acceder a la red ethernet del router, consultar la [documentación oficial](https://www.raspberrypi.com/documentation/computers/configuration.html#setting-up-a-routed-wireless-access-point) para ver las modificaciones necesarias en el script**
+
 Una vez finalizada la ejecución de ambos scripts, la red debería estar visible para conectarse mediante cualquier dispositivo, introduciendo la contraseña que se haya configurado.
 
 #### Configuración de docker y sus contenedores
@@ -256,6 +258,8 @@ Para la ejecución del script, usar el comando `sudo sh ./files/scripts/environm
 
 Una vez el script termine de ejecutarse, el entorno de trabajo ya estará disponible para conectar nuestros *IAQ* y configurar lo necesario en *NODE-RED*.
 
+**NOTA: La prueba de concepto está configurada para que el script cargue en *NODE-RED* un [flow de ejemplo](https://github.com/UO232627/BACnetProject/blob/main/files/docker/nodered/flows/flows.json), pero podría configurarse para que no cargue nada y empezar a hacer un flow desde cero**
+
 #### Conexión a la red y sistema de ejemplo
 
 Dependiendo de si el nuevo entorno se quiere añadir a un sistema ya en funcionamiento o se quiere crear un nuevo entorno completamente aislado, podría interesarnos la conexión vía *ethernet* o vía punto de acceso.
@@ -264,4 +268,26 @@ En el ejemplo hecho para la prueba de concepto, nos encontramos con un esquema s
 
 ![Esquema entorno](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/esquemaEntorno.png "Esquema entorno")
 
-**NOTA: El acceso a *NODE-RED* se hace desde 192.168.4.1:1880 desde un dispositivo con conexión a la red generada por la *raspberry***
+En este caso y como se puede ver por las direcciones, los dispositivos están conectados de la siguiente manera:
+- *IAQ*: Conectado vía Wifi al punto de acceso generado por la *raspberry*
+- *PC*: Conectado vía ethernet a un router y vía Wifi al punto de acceso generado por la *raspberry*
+- *Gateway*: Conectado vía ethernet a un router
+
+Estas conexiones podrían variarse como se comentaba anteriormente. Podríamos por ejemplo conectar directamente nuestro dispositivo *BACnet* al punto de acceso Wifi de la *raspberry* para tener una red "aislada" y/o sin salida a la red del router.
+
+Con esta configuración, nuestro *IAQ* enviaría mensajes *MQTT* al broker *mosquitto* que hay en ejecución en la *raspberry*. Estos mensajes se interceptan y procesan en el cliente *NODE-RED* de manera que separa cada medida y la envía a un nodo de escritura *BACnet*. El [flow de ejemplo](https://github.com/UO232627/BACnetProject/blob/main/files/docker/nodered/flows/flows.json) usado para esta prueba de concepto es el siguiente:
+
+![Flow raspberry](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/flowRaspberry.PNG "Flow raspberry")
+
+**NOTA: El acceso a *NODE-RED* se hace desde 192.168.4.1:1880 con un dispositivo con conexión a la red generada por el punto de acceso de la *raspberry***
+
+Conceptualmente es muy similar al que se usó en la prueba en local. Los únicos cambios son las direcciones IP de los dispositivos conectados (tanto del *IAQ* como del dispositivo *BACnet*) y la separación de los elementos del mensaje original.
+
+Esta separación, ahora se hace mediante una función para cada medida. Los parametros de configuración que se almacenan en `msg.payload.values` son:
+
+![Configuración escritura](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/configNode.PNG "Configuración escritura")
+
+- *type*: Correspondiente al *app-tag* del módulo de escritura BACnet
+- *value*: Valor que se quiere escribir en el dispositivo
+
+Una vez procesado el mensaje *MQTT*, se escribe en el dispositivo BACnet y se envían las medidas de manera individual de nuevo al broker *MQTT* con un tópic individual para cada medida, dentro de un topic por cada ID de un *IAQ*. En este punto, ya podemos leer en YABE las propiedades de cada objeto del dispositivo para comprobar los valores ya escritos.
