@@ -215,6 +215,8 @@ Para la configuración de nuestro entorno, necesitamos varios [scripts](https://
 
 Para añadirlos a la *raspberry*, nos conectamos mediante *SSH* con un programa como *MobaXTerm*, por ejemplo. Una vez conectados, nos logueamos con nuestro usuario y añadimos el directorio [*files*](https://github.com/UO232627/BACnetProject/tree/main/files) en el directorio raíz del usuario.
 
+**NOTA: LA MEJORA DE LA CONFIGURACIÓN ESTÁ EN PROCESO Y ESTO ES SOLO UN PRIMER ACERCAMIENTO MEDIANTE UNA PRUEBA DE CONCEPTO. SE QUIERE GENERAR UN SCRIPT QUE HAGA TODO SIN FALTA DE MEDIACIÓN DEL USUARIO ENTRE LA EJECUCIÓN DE CADA SCRIPT**
+
 #### Punto de acceso inalámbrico
 
 Para poder conectar nuestros dispositivos, se configurará nuestra *raspberry* como un punto de acceso wifi. De esta manera podremos conectar nuestro *broker MQTT* a ella y así poder procesar los datos y enviarlos a los dispositivos BACnet.
@@ -281,6 +283,7 @@ Con esta configuración, nuestro *IAQ* enviaría mensajes *MQTT* al broker *mosq
 
 ![Flow raspberry](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/flowRaspberry.PNG "Flow raspberry")
 
+**NOTA: LA MEJORA DEL FLOW ESTÁ EN PROCESO Y SE TRATARÁ DE ESCRIBIR DE FORMA DINÁMICA PARA QUE NO SEA NECESARIO TENER UNA FUNCIÓN POR CADA UNA DE LAS ESCRITURAS QUE SE PRETENDE HACER**
 **NOTA: El acceso a *NODE-RED* se hace desde 192.168.4.1:1880 con un dispositivo con conexión a la red generada por el punto de acceso de la *raspberry***
 
 Conceptualmente es muy similar al que se usó en la prueba en local. Los únicos cambios son las direcciones IP de los dispositivos conectados (tanto del *IAQ* como del dispositivo *BACnet*) y la separación de los elementos del mensaje original.
