@@ -209,11 +209,47 @@ Como se ha puede ver en el apartado de conversiones de datos y lecturas/escritur
 
 Los pasos para preparar este entorno y como usarlo se explicarán a continuación.
 
-### Configuración de la rapsberry pi
+### Configuración de la *rapsberry pi*
+
+#### Instalación de un *S.O.* en la *raspberry*
+
+- El primer paso para la creación de nuestro entorno es tener una *raspberry* operativa. Para ello, nos descargamos el programa [Raspberry PI Imager](https://www.raspberrypi.com/software/).
+- Una vez descargado e instalado, insertamos la *SD* o el dispositivo de almacenamiento que queramos usar para nuestro sistema operativo
+- En el apartado *Operating System*, seleccionamos el *SO* que queramos instalar. En nuestro caso, como no necesitamos una interfaz de usuario, instalaremos la versión *Lite* de 64 bytes
+
+![Imager SO 1](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/imagerSO1.PNG "Imager SO 1")
+![Imager SO 2](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/imagerSO2.PNG "Imager SO 2")
+![Imager SO 3](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/imagerSO1.PNG "Imager SO 3")
+
+- Una vez seleccionado, en la pestaña *Storage*, seleccionamos nuestro dispositivo de almacenamiento
+
+![Imager storage](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/imagerStorage.PNG "Imager storage")
+
+- A continuación, en la rueda de configuración de la parte inferior derecha, configuramos las conexiones del sistema. En este caso solo necesitamos habilitar las conexiones *SSH* y dar un nombre de usuario y contraseña para hacer login en la *raspberry*
+
+![Imager configuración](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/imagerConfig.PNG "Imager configuración")
+
+- Una vez terminada la configuración, hacemos click en el botón *Write* y se empezará a cargar el *SO*. Una vez finalizado, podemos extraer el dispositivo de almacenamiento e insertarlo en la *raspberry*
+
+#### Conexión inicial a la *raspberry*
 
 Para la configuración de nuestro entorno, necesitamos varios [scripts](https://github.com/UO232627/BACnetProject/tree/main/files/scripts) y [ficheros](https://github.com/UO232627/BACnetProject/tree/main/files/docker) necesarios para su ejecución.
 
-Para añadirlos a la *raspberry*, nos conectamos mediante *SSH* con un programa como *MobaXTerm*, por ejemplo. Una vez conectados, nos logueamos con nuestro usuario y añadimos el directorio [*files*](https://github.com/UO232627/BACnetProject/tree/main/files) en el directorio raíz del usuario.
+Para añadirlos a la *raspberry*, nos conectamos mediante *SSH* con un programa como [*MobaXterm*](https://mobaxterm.mobatek.net/download.html), por ejemplo. Para ello, con el propio *MobaXterm tenemos una herramienta de escaneo de la red.
+
+![Escaner red](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/mobaHerramientaEscaner.PNG "Escaner red")
+![Red escaneada](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/mobaEscaneada.PNG "Red escaneada")
+
+El dispositivo que estamos buscando, tiene que ser uno de los que tiene habilitada la conexión por *SSH*. Localizamos la dirección de la *raspberry* (172.16.30.175 en este caso) y ya podemos conectarnos.
+
+Para conectarnos, creamos una sesión *SSH* con la dirección que hemos localizado y se conectará automáticamente.
+
+![Moba sesión](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/mobaSession.PNG "Moba sesión")
+![Moba SSH](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/mobaSSH.PNG "Moba SSH")
+
+Nos pedirá nos logueamos con nuestro usuario y contraseña. Una vez dentro, añadimos el directorio [*files*](https://github.com/UO232627/BACnetProject/tree/main/files) en el directorio raíz del usuario (en el que aparecemos por defecto al iniciar la conexión)
+
+![Moba raíz](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/mobaRaiz.PNG "Moba raíz")
 
 **NOTA: LA MEJORA DE LA CONFIGURACIÓN ESTÁ EN PROCESO Y ESTO ES SOLO UN PRIMER ACERCAMIENTO MEDIANTE UNA PRUEBA DE CONCEPTO. SE QUIERE GENERAR UN SCRIPT QUE HAGA TODO SIN FALTA DE MEDIACIÓN DEL USUARIO ENTRE LA EJECUCIÓN DE CADA SCRIPT**
 
