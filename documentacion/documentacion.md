@@ -86,7 +86,7 @@ Cargar la configuración en el *gateway*. Para ello:
     - Ruta de ejemplo: `C:\Program Files (x86)\ADFweb\Compositor_SW67938\Projects`
 - Si se quiere hacer una copia de alguna configuración, copiar y pegar dentro del directorio y cambiar el nombre por el que se quiera
 
-## Despliegue del entorno
+## Despliegue del entorno en local
 
 - Para el despliegue del entorno, se proporcionan dos ficheros con todo lo necesario para su ejecución
     - [**docker-compose.yml**](https://github.com/UO232627/gatewayProject/blob/main/docker/docker-compose.yml) - Configuración de los dos servicios que se quieren desplegar indicando puertos (por defecto los estandar) y las rutas de los ficheros necesarios para la configuración
@@ -101,7 +101,7 @@ Cargar la configuración en el *gateway*. Para ello:
 
 Mantener los nombres de los ficheros. En caso de modificarlos, cambiar la referencia correspondiente en el docker-compose y el dockerfile
 
-## Visualización de la red en **YABE**/**WIRESHARK** [(Más detalles)](https://www.domat-int.com/en/bacnet-a-brief-introduction-to-the-basics-pt-2)
+## Visualización de la red en **YABE**/**WIRESHARK** en local [(Más detalles)](https://www.domat-int.com/en/bacnet-a-brief-introduction-to-the-basics-pt-2)
 
 - Pasos para visualizar una red en YABE:
     1. Entrar en el menú de añadir red haciendo click en la cruz verde bajo la barra de herramientas ![Menú nueva red](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/a%C3%B1adirNuevaRed.PNG "Menú nueva red")
@@ -118,7 +118,7 @@ Si queremos ver el contenido de los mensajes para saber como es la estructura de
 - Aquí se puede ver toda la información que contiene un mensaje. Si queremos ir al *"valor"* de la petición, debemos abrir el apartado APDU ![wiresharkMensaje](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/wiresharkMensaje.PNG "wiresharkMensaje") ![wiresharkAPDU](https://github.com/UO232627/gatewayProject/blob/main/documentacion/images/wiresharkAPDU.PNG "wiresharkAPDU")
     - En este caso, nuestro valor es *"Present Value (real): 0"*
 
-## Conversión de mensajes MQTT del IAQ al *Gateway* (*NODE-RED*)
+## Conversión de mensajes MQTT del IAQ al *Gateway* en local (*NODE-RED*)
 
 - Para la transformación de mensajes mediante *NODE-RED*, se puede usar un *flow* en *NODE-RED* como este [ejemplo](https://github.com/UO232627/gatewayProject/blob/main/nodered/splitMQTT.json)
 
@@ -144,7 +144,7 @@ Los elementos del *flow* son:
 
 La configuración de todos los parámetros de estos elementos se puede modificar en el fichero JSON de configuración que se carga en el contenedor nodered al crear el entorno de ejecución
 
-## Lectura/Escritura contra un dispositivo BACnet (*Gateway*)(*NODE-RED*)
+## Lectura/Escritura contra un dispositivo BACnet en local (*Gateway*)(*NODE-RED*)
 
 - **¡IMPORTANTE!** La lectura y escritura solo se puede hacer contra los objetos *BACnet* del *gateway* del tipo adecuado (en función de si son de lectura o escritura en la configuración del *gateway*)
 - **¡IMPORTANTE!** Para hacer este tipo de operaciones en *NODE-RED*, se necesita la paleta/modulo **node-red-contrib-bacnet** (instalada por defecto en el entorno proporcionado)
@@ -191,7 +191,7 @@ Configuración lectura:
 - [Ampliación sobre objetos, tipos y tags](http://www.bacnet.org/Bibliography/ES-7-96/ES-7-96.htm)
 - Estas peticiones y respuestas, se pueden ver mediante *Wireshark*
 
-## Notas
+## Notas sobre el gateway
 
 - [Página oficial de *BACnet* y documentación](http://www.bacnet.org/)
 
@@ -203,7 +203,7 @@ Configuración lectura:
 - Con el modelo de *gateway* usado para las pruebas no se pueden usar conexiones *BACnet/MTSP* mediante *RS485*, solo se puede usar *BACnet/IP*
 
 
-## DESPLIEGUE DEL ENTORNO EN UNA RASPBERRY PI
+## PRUEBA DE CONCEPTO - DESPLIEGUE DEL ENTORNO EN UNA RASPBERRY PI
 
 Como se ha puede ver en el apartado de conversiones de datos y lecturas/escrituras, para poder integrar dispositivos *MQTT* como el *IAQ* con otros BACnet, es necesario tratar los datos y usar ciertos programas. Para facilitar esto, se ha creado un entorno de funcionamiento mediante una *Raspberry Pi* en el que todo lo necesario está preparado para su uso directo.
 
