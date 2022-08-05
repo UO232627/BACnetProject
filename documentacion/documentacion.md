@@ -256,31 +256,12 @@ Para la ejecución del script, usar el comando `sudo sh ./files/scripts/environm
 
 Una vez el script termine de ejecutarse, el entorno de trabajo ya estará disponible para conectar nuestros *IAQ* y configurar lo necesario en *NODE-RED*.
 
-**NOTA: El acceso a *NODE-RED* se hace desde 192.168.4.1:1880 desde un dispositivo con conexión a la red generada por la *raspberry***
-
 #### Conexión a la red y sistema de ejemplo
 
 Dependiendo de si el nuevo entorno se quiere añadir a un sistema ya en funcionamiento o se quiere crear un nuevo entorno completamente aislado, podría interesarnos la conexión vía *ethernet* o vía punto de acceso.
 
 En el ejemplo hecho para la prueba de concepto, nos encontramos con un esquema similar al siguiente:
 
+![Esquema entorno](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/esquemaEntorno.png "Esquema entorno")
 
-
-
-
-
-
-
-
-
-
-
-https://jfrog.com/connect/post/install-docker-compose-on-raspberry-pi/
-
-https://hub.docker.com/r/nodered/node-red
-
-https://hub.docker.com/_/eclipse-mosquitto/
-
-https://phoenixnap.com/kb/docker-on-raspberry-pi
-
-https://fh1ch.github.io/node-bacstack/bacstack.html#.writeProperty
+**NOTA: El acceso a *NODE-RED* se hace desde 192.168.4.1:1880 desde un dispositivo con conexión a la red generada por la *raspberry***
