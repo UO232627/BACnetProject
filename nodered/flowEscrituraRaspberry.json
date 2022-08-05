@@ -1,0 +1,762 @@
+[
+    {
+        "id": "8d3f0afe2a5455f1",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "05bbf49b9ba07866",
+        "type": "mqtt in",
+        "z": "8d3f0afe2a5455f1",
+        "name": "fromIAQ",
+        "topic": "medida",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "9bb8382a5cc0f7e3",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 80,
+        "y": 40,
+        "wires": [
+            [
+                "8401f2814c8ff42c"
+            ]
+        ]
+    },
+    {
+        "id": "8401f2814c8ff42c",
+        "type": "json",
+        "z": "8d3f0afe2a5455f1",
+        "name": "transformIntoJS",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 240,
+        "y": 40,
+        "wires": [
+            [
+                "4f532d9446ab75f2"
+            ]
+        ]
+    },
+    {
+        "id": "4f532d9446ab75f2",
+        "type": "function",
+        "z": "8d3f0afe2a5455f1",
+        "name": "separateMeasuresMQTT",
+        "func": "msg.topic = \"splitedMeasures/\" + msg.payload.device_info.uuid + \"/\"\nmsg.payload = msg.payload.measures\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 40,
+        "wires": [
+            [
+                "88ba073a09193756",
+                "650d36b6e91f655f",
+                "fdf4efe28c34f9c4",
+                "6f792fd603af2bed",
+                "4f6a8f9e3e06090a",
+                "c63023fccd2672a7",
+                "094347e1f74a307f",
+                "7a06a9ade930395d",
+                "25d4107086366b25",
+                "cc2cee132117dfc2",
+                "413f3dcdef08b133",
+                "2cc00ddc93799f5e",
+                "c5e0c13e75088975",
+                "aaf91b60c94bfd63"
+            ]
+        ]
+    },
+    {
+        "id": "88ba073a09193756",
+        "type": "split",
+        "z": "8d3f0afe2a5455f1",
+        "name": "splitMeasures",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 700,
+        "y": 40,
+        "wires": [
+            [
+                "37134416c3fe8672"
+            ]
+        ]
+    },
+    {
+        "id": "37134416c3fe8672",
+        "type": "function",
+        "z": "8d3f0afe2a5455f1",
+        "name": "editMessage",
+        "func": "msg.topic = msg.topic + msg.payload.n\nmsg.payload = msg.payload.v\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 40,
+        "wires": [
+            [
+                "33b8186903d291c3"
+            ]
+        ]
+    },
+    {
+        "id": "33b8186903d291c3",
+        "type": "mqtt out",
+        "z": "8d3f0afe2a5455f1",
+        "name": "toBroker",
+        "topic": "",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9bb8382a5cc0f7e3",
+        "x": 1020,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "650d36b6e91f655f",
+        "type": "function",
+        "z": "8d3f0afe2a5455f1",
+        "name": "co2",
+        "func": "msg.payload.values = [\n    { type: 4, value: msg.payload[0].v }\n]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 100,
+        "wires": [
+            [
+                "f69e0e370e823735"
+            ]
+        ]
+    },
+    {
+        "id": "fdf4efe28c34f9c4",
+        "type": "function",
+        "z": "8d3f0afe2a5455f1",
+        "name": "voc",
+        "func": "msg.payload.values = [\n    { type: 4, value: msg.payload[1].v }\n]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 140,
+        "wires": [
+            [
+                "861460c520dfd9e0"
+            ]
+        ]
+    },
+    {
+        "id": "6f792fd603af2bed",
+        "type": "function",
+        "z": "8d3f0afe2a5455f1",
+        "name": "co",
+        "func": "msg.payload.values = [\n    { type: 4, value: msg.payload[2].v }\n]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 180,
+        "wires": [
+            [
+                "789c98aff5ea79b5"
+            ]
+        ]
+    },
+    {
+        "id": "4f6a8f9e3e06090a",
+        "type": "function",
+        "z": "8d3f0afe2a5455f1",
+        "name": "pm10",
+        "func": "msg.payload.values = [\n    { type: 4, value: msg.payload[3].v }\n]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 220,
+        "wires": [
+            [
+                "ee3e3a81d921e37f"
+            ]
+        ]
+    },
+    {
+        "id": "c63023fccd2672a7",
+        "type": "function",
+        "z": "8d3f0afe2a5455f1",
+        "name": "pm2.5",
+        "func": "msg.payload.values = [\n    { type: 4, value: msg.payload[4].v }\n]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 260,
+        "wires": [
+            [
+                "225d41f2ed14b490"
+            ]
+        ]
+    },
+    {
+        "id": "094347e1f74a307f",
+        "type": "function",
+        "z": "8d3f0afe2a5455f1",
+        "name": "temp",
+        "func": "msg.payload.values = [\n    { type: 4, value: msg.payload[5].v }\n]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 300,
+        "wires": [
+            [
+                "8aa0ed5ddba2d0d1"
+            ]
+        ]
+    },
+    {
+        "id": "7a06a9ade930395d",
+        "type": "function",
+        "z": "8d3f0afe2a5455f1",
+        "name": "hum",
+        "func": "msg.payload.values = [\n    { type: 4, value: msg.payload[6].v }\n]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 340,
+        "wires": [
+            [
+                "5cd56bdd83342d9a"
+            ]
+        ]
+    },
+    {
+        "id": "25d4107086366b25",
+        "type": "function",
+        "z": "8d3f0afe2a5455f1",
+        "name": "prb",
+        "func": "msg.payload.values = [\n    { type: 4, value: msg.payload[7].v }\n]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 380,
+        "wires": [
+            [
+                "730f9d70ce977545"
+            ]
+        ]
+    },
+    {
+        "id": "cc2cee132117dfc2",
+        "type": "function",
+        "z": "8d3f0afe2a5455f1",
+        "name": "pm1",
+        "func": "msg.payload.values = [\n    { type: 4, value: msg.payload[8].v }\n]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 420,
+        "wires": [
+            [
+                "4444c2f3277dd6cb"
+            ]
+        ]
+    },
+    {
+        "id": "413f3dcdef08b133",
+        "type": "function",
+        "z": "8d3f0afe2a5455f1",
+        "name": "pm4",
+        "func": "msg.payload.values = [\n    { type: 4, value: msg.payload[9].v }\n]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 460,
+        "wires": [
+            [
+                "ed69d08f986a074c"
+            ]
+        ]
+    },
+    {
+        "id": "2cc00ddc93799f5e",
+        "type": "function",
+        "z": "8d3f0afe2a5455f1",
+        "name": "iaqi",
+        "func": "msg.payload.values = [\n    { type: 3, value: msg.payload[10].v }\n]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 500,
+        "wires": [
+            [
+                "6b3dacb18738558d"
+            ]
+        ]
+    },
+    {
+        "id": "c5e0c13e75088975",
+        "type": "function",
+        "z": "8d3f0afe2a5455f1",
+        "name": "tci",
+        "func": "msg.payload.values = [\n    { type: 3, value: msg.payload[11].v }\n]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 540,
+        "wires": [
+            [
+                "985c775727ca854f"
+            ]
+        ]
+    },
+    {
+        "id": "aaf91b60c94bfd63",
+        "type": "function",
+        "z": "8d3f0afe2a5455f1",
+        "name": "eiaqi",
+        "func": "msg.payload.values = [\n    { type: 3, value: msg.payload[12].v }\n]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 580,
+        "wires": [
+            [
+                "bf1dc5192ba818c9"
+            ]
+        ]
+    },
+    {
+        "id": "f69e0e370e823735",
+        "type": "BACnet-Write",
+        "z": "8d3f0afe2a5455f1",
+        "name": "escrituraCo2",
+        "objectType": "2",
+        "instance": "3b91776736602dc6",
+        "valueTag": "4",
+        "valueValue": "",
+        "propertyId": "85",
+        "priority": "15",
+        "device": "4cde29161c85f4aa",
+        "server": "d58ab7a57785c9c6",
+        "multipleWrite": false,
+        "x": 870,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "861460c520dfd9e0",
+        "type": "BACnet-Write",
+        "z": "8d3f0afe2a5455f1",
+        "name": "escrituraVoc",
+        "objectType": "2",
+        "instance": "2d829ea628e81322",
+        "valueTag": "4",
+        "valueValue": "",
+        "propertyId": "85",
+        "priority": "15",
+        "device": "4cde29161c85f4aa",
+        "server": "d58ab7a57785c9c6",
+        "multipleWrite": false,
+        "x": 870,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "789c98aff5ea79b5",
+        "type": "BACnet-Write",
+        "z": "8d3f0afe2a5455f1",
+        "name": "escrituraCo",
+        "objectType": "2",
+        "instance": "014a7265de792ac2",
+        "valueTag": "4",
+        "valueValue": "",
+        "propertyId": "85",
+        "priority": "15",
+        "device": "4cde29161c85f4aa",
+        "server": "d58ab7a57785c9c6",
+        "multipleWrite": false,
+        "x": 870,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ee3e3a81d921e37f",
+        "type": "BACnet-Write",
+        "z": "8d3f0afe2a5455f1",
+        "name": "escrituraPm10",
+        "objectType": "2",
+        "instance": "0fd7905fe3915db1",
+        "valueTag": "4",
+        "valueValue": "",
+        "propertyId": "85",
+        "priority": "15",
+        "device": "4cde29161c85f4aa",
+        "server": "d58ab7a57785c9c6",
+        "multipleWrite": false,
+        "x": 880,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "225d41f2ed14b490",
+        "type": "BACnet-Write",
+        "z": "8d3f0afe2a5455f1",
+        "name": "escrituraPm2.5",
+        "objectType": "2",
+        "instance": "6481008f86875baa",
+        "valueTag": "4",
+        "valueValue": "",
+        "propertyId": "85",
+        "priority": "15",
+        "device": "4cde29161c85f4aa",
+        "server": "d58ab7a57785c9c6",
+        "multipleWrite": false,
+        "x": 880,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8aa0ed5ddba2d0d1",
+        "type": "BACnet-Write",
+        "z": "8d3f0afe2a5455f1",
+        "name": "escrituraTemp",
+        "objectType": "2",
+        "instance": "06fa8a6897665394",
+        "valueTag": "4",
+        "valueValue": "",
+        "propertyId": "85",
+        "priority": "15",
+        "device": "4cde29161c85f4aa",
+        "server": "d58ab7a57785c9c6",
+        "multipleWrite": false,
+        "x": 880,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5cd56bdd83342d9a",
+        "type": "BACnet-Write",
+        "z": "8d3f0afe2a5455f1",
+        "name": "escrituraHum",
+        "objectType": "2",
+        "instance": "160b748c0ed299b3",
+        "valueTag": "4",
+        "valueValue": "",
+        "propertyId": "85",
+        "priority": "15",
+        "device": "4cde29161c85f4aa",
+        "server": "d58ab7a57785c9c6",
+        "multipleWrite": false,
+        "x": 870,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "730f9d70ce977545",
+        "type": "BACnet-Write",
+        "z": "8d3f0afe2a5455f1",
+        "name": "escrituraPrb",
+        "objectType": "2",
+        "instance": "af681872d5214041",
+        "valueTag": "4",
+        "valueValue": "",
+        "propertyId": "85",
+        "priority": "15",
+        "device": "4cde29161c85f4aa",
+        "server": "d58ab7a57785c9c6",
+        "multipleWrite": false,
+        "x": 870,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4444c2f3277dd6cb",
+        "type": "BACnet-Write",
+        "z": "8d3f0afe2a5455f1",
+        "name": "escrituraPm1",
+        "objectType": "2",
+        "instance": "544c0c6bbe010a61",
+        "valueTag": "4",
+        "valueValue": "",
+        "propertyId": "85",
+        "priority": "15",
+        "device": "4cde29161c85f4aa",
+        "server": "d58ab7a57785c9c6",
+        "multipleWrite": false,
+        "x": 870,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ed69d08f986a074c",
+        "type": "BACnet-Write",
+        "z": "8d3f0afe2a5455f1",
+        "name": "escrituraPm4",
+        "objectType": "2",
+        "instance": "d5b2ecb31fa530ed",
+        "valueTag": "4",
+        "valueValue": "",
+        "propertyId": "85",
+        "priority": "15",
+        "device": "4cde29161c85f4aa",
+        "server": "d58ab7a57785c9c6",
+        "multipleWrite": false,
+        "x": 870,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6b3dacb18738558d",
+        "type": "BACnet-Write",
+        "z": "8d3f0afe2a5455f1",
+        "name": "escrituraIaqi",
+        "objectType": "45",
+        "instance": "e12b97f8644e5785",
+        "valueTag": "3",
+        "valueValue": "",
+        "propertyId": "85",
+        "priority": "15",
+        "device": "4cde29161c85f4aa",
+        "server": "d58ab7a57785c9c6",
+        "multipleWrite": false,
+        "x": 870,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "985c775727ca854f",
+        "type": "BACnet-Write",
+        "z": "8d3f0afe2a5455f1",
+        "name": "escrituraTci",
+        "objectType": "45",
+        "instance": "97bc4e9ebc5e5bc6",
+        "valueTag": "3",
+        "valueValue": "",
+        "propertyId": "85",
+        "priority": "15",
+        "device": "4cde29161c85f4aa",
+        "server": "d58ab7a57785c9c6",
+        "multipleWrite": false,
+        "x": 870,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bf1dc5192ba818c9",
+        "type": "BACnet-Write",
+        "z": "8d3f0afe2a5455f1",
+        "name": "escrituraEiaqi",
+        "objectType": "45",
+        "instance": "e58dd1428d08f1c1",
+        "valueTag": "3",
+        "valueValue": "",
+        "propertyId": "85",
+        "priority": "15",
+        "device": "4cde29161c85f4aa",
+        "server": "d58ab7a57785c9c6",
+        "multipleWrite": false,
+        "x": 880,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9bb8382a5cc0f7e3",
+        "type": "mqtt-broker",
+        "name": "IAQ",
+        "broker": "192.168.4.1",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "3b91776736602dc6",
+        "type": "BACnet-Instance",
+        "name": "co2",
+        "instanceAddress": "0"
+    },
+    {
+        "id": "4cde29161c85f4aa",
+        "type": "BACnet-Device",
+        "name": "Gateway",
+        "deviceAddress": "172.16.30.162"
+    },
+    {
+        "id": "d58ab7a57785c9c6",
+        "type": "BACnet-Client",
+        "name": "Red",
+        "adpuTimeout": "3000",
+        "port": "47808",
+        "interface": "172.16.30.251",
+        "broadcastAddress": "172.16.30.255"
+    },
+    {
+        "id": "2d829ea628e81322",
+        "type": "BACnet-Instance",
+        "name": "voc",
+        "instanceAddress": "1"
+    },
+    {
+        "id": "014a7265de792ac2",
+        "type": "BACnet-Instance",
+        "name": "co",
+        "instanceAddress": "2"
+    },
+    {
+        "id": "0fd7905fe3915db1",
+        "type": "BACnet-Instance",
+        "name": "pm10",
+        "instanceAddress": "3"
+    },
+    {
+        "id": "6481008f86875baa",
+        "type": "BACnet-Instance",
+        "name": "pm2.5",
+        "instanceAddress": "4"
+    },
+    {
+        "id": "06fa8a6897665394",
+        "type": "BACnet-Instance",
+        "name": "temp",
+        "instanceAddress": "5"
+    },
+    {
+        "id": "160b748c0ed299b3",
+        "type": "BACnet-Instance",
+        "name": "hum",
+        "instanceAddress": "6"
+    },
+    {
+        "id": "af681872d5214041",
+        "type": "BACnet-Instance",
+        "name": "prb",
+        "instanceAddress": "7"
+    },
+    {
+        "id": "544c0c6bbe010a61",
+        "type": "BACnet-Instance",
+        "name": "pm1",
+        "instanceAddress": "8"
+    },
+    {
+        "id": "d5b2ecb31fa530ed",
+        "type": "BACnet-Instance",
+        "name": "pm4",
+        "instanceAddress": "9"
+    },
+    {
+        "id": "e12b97f8644e5785",
+        "type": "BACnet-Instance",
+        "name": "iaqi",
+        "instanceAddress": "0"
+    },
+    {
+        "id": "97bc4e9ebc5e5bc6",
+        "type": "BACnet-Instance",
+        "name": "tci",
+        "instanceAddress": "1"
+    },
+    {
+        "id": "e58dd1428d08f1c1",
+        "type": "BACnet-Instance",
+        "name": "eiaqi",
+        "instanceAddress": "2"
+    }
+]
