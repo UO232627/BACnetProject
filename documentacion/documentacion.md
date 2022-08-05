@@ -264,7 +264,7 @@ Una vez el script termine de ejecutarse, el entorno de trabajo ya estará dispon
 
 #### Conexión a la red y sistema de ejemplo
 
-Dependiendo de si el nuevo entorno se quiere añadir a un sistema ya en funcionamiento o se quiere crear un nuevo entorno completamente aislado, podría interesarnos la conexión vía *ethernet* o vía punto de acceso.
+Dependiendo de si el nuevo entorno se quiere añadir a un sistema ya en funcionamiento o se quiere crear un nuevo entorno completamente aislado, podría interesarnos la conexión de los dispositivos vía *ethernet* o vía punto de acceso.
 
 En el ejemplo hecho para la prueba de concepto, nos encontramos con un esquema similar al siguiente:
 
