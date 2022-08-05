@@ -219,7 +219,7 @@ Los pasos para preparar este entorno y como usarlo se explicarán a continuació
 
 ![Imager SO 1](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/imagerSO1.PNG "Imager SO 1")
 ![Imager SO 2](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/imagerSO2.PNG "Imager SO 2")
-![Imager SO 3](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/imagerSO1.PNG "Imager SO 3")
+![Imager SO 3](https://github.com/UO232627/BACnetProject/blob/main/documentacion/images/imagerSO3.PNG "Imager SO 3")
 
 - Una vez seleccionado, en la pestaña *Storage*, seleccionamos nuestro dispositivo de almacenamiento
 
