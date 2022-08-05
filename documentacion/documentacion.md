@@ -209,14 +209,23 @@ Como se ha puede ver en el apartado de conversiones de datos y lecturas/escritur
 
 Los pasos para preparar este entorno y como usarlo se explicarán a continuación.
 
-### Configuración de la rapsberry pi como punto de acceso inalámbrico
+### Configuración de la rapsberry pi
 
-Para este entorno de funcionamiento, se configurará nuestra *raspberry* como un punto de acceso wifi. De esta manera podremos conectar nuestro *broker MQTT* a ella y así poder procesar los datos y enviarlos a los dispositivos BACnet.
+Para la configuración de nuestro entorno, necesitamos varios [scripts](https://github.com/UO232627/BACnetProject/tree/main/files/scripts) y [ficheros](https://github.com/UO232627/BACnetProject/tree/main/files/docker) necesarios para su ejecución.
+
+Para añadirlos a la *raspberry*, nos conectamos mediante *SSH* con un programa como *MobaXTerm* por ejemplo. Una vez conectados, nos logueamos con nuestro usuario y añadimos el directorio [*files*](https://github.com/UO232627/BACnetProject/tree/main/files) en el directorio raíz del usuario.
+
+#### Punto de acceso inalámbrico
+
+Para poder conectar nuestros dispositivos, se configurará nuestra *raspberry* como un punto de acceso wifi. De esta manera podremos conectar nuestro *broker MQTT* a ella y así poder procesar los datos y enviarlos a los dispositivos BACnet.
 
 Se han seguido los siguientes [pasos](https://www.raspberrypi.com/documentation/computers/configuration.html#setting-up-a-routed-wireless-access-point) para la configuración. Para facilitar la preparación, se puede hacer mediante los scripts preparados para este propósito.
 
+**NOTA: Tras la ejecución de los dos scripts que se mencionan a continuación, el sistema se reiniciará, por lo que hay que volver a introducir el usuario y la contraseña para tener acceso de nuevo**
+
 Contenido de los scripts y configuración:
 - [update.sh](https://github.com/UO232627/BACnetProject/blob/main/files/scripts/update.sh): Script necesario para actualizar el sistema operativo de la *raspberry*. **¡IMPORTANTE! Es el primero que hay que ejecutar**.
+    - Para la ejecución del script usar el comando `sudo sh ./files/scripts/update.sh`
 - [access_point.sh](https://github.com/UO232627/BACnetProject/blob/main/files/scripts/acces_point.sh): Script que configura el punto de acceso wifi. Se debe ejecutar despues de haber actualizado el sistema. Este script tiene varias configuraciones que se pueden modificar:
     - *dhcpcd.conf*: Al final de este fichero, podemos indicar la dirección IP (estática) que queremos que tenga nuestro entorno de funcionamiento, modificando el valor del parámetro en las últimas líneas.
    
@@ -227,9 +236,44 @@ Contenido de los scripts y configuración:
         En este caso, la dirección es 192.168.4.1.
 
     - *dnsmasq.conf*: Aquí se puede indicar el rango de direcciones que se quiere tener para los nuevos dispositivos que se conecten. Esto podemos configurarlo en la línea `dhcp-range=192.168.4.2,192.168.4.20,255.255.255.0,24h`. Aquí se puede indicar la dirección inicial (192.168.4.2), la final (192.168.4.20), la máscara de subred (255.255.255.0) y el tiempo que se da la dirección (24 horas). En este fichero también podemos indicar el alias que se le quiere dar a la red. En caso de haber modificado la dirección en el fichero *dhcpcd.conf*, también deberíamos cambiarla aquí `address=/gw.wlan/192.168.4.1`.
-    - 
+    - *hostapd.conf*: En este fichero se configura todo lo relacionado con la red wifi que se va a ver de cara a los dispositivos. Los parámetros más susceptibles a ser configurados son:
+        - *country_code*: País de la señal wifi. Esto hace que cambien las frecuencias de la red.
+        - *hw_mode*: Frecuencia de la red (más información en la documentación oficial). En caso de modificarlo hay que cambiar el *channel* a uno compatible
+        - *ssid*: Nombre de la red
+        - *wpa_passphrase*: Contraseña de la red
+       
+    - Para la ejecución del script usar el comando `sudo sh ./files/scripts/access_point.sh`
 
-A node-red se accede desde 192.168.4.1:1880
+Una vez finalizada la ejecución de ambos scripts, la red debería estar visible para conectarse mediante cualquier dispositivo, introduciendo la contraseña que se haya configurado.
+
+#### Configuración de docker y sus contenedores
+
+El segundo paso en la configuración de la *raspberry* es la dockerización del entorno y la creación de los contenedores necesarios para su correcto funcionamiento. De manera similar a la prueba de concepto hecha en local, se crearán dos contenedores, uno para añadir un cliente *NODE-RED* y otro para la creación de un broker *MQTT* mediante *mosquitto*.
+
+El proceso para la creación es similar al hecho en local, solo que esta vez se hace con un [script](https://github.com/UO232627/BACnetProject/blob/main/files/scripts/environment.sh) que nos instala todos los paquetes y dependencias necesarias para su instalación.
+
+Para la ejecución del script, usar el comando `sudo sh ./files/scripts/environment.sh`
+
+Una vez el script termine de ejecutarse, el entorno de trabajo ya estará disponible para conectar nuestros *IAQ* y configurar lo necesario en *NODE-RED*.
+
+**NOTA: El acceso a *NODE-RED* se hace desde 192.168.4.1:1880 desde un dispositivo con conexión a la red generada por la *raspberry***
+
+#### Conexión a la red y sistema de ejemplo
+
+Dependiendo de si el nuevo entorno se quiere añadir a un sistema ya en funcionamiento o se quiere crear un nuevo entorno completamente aislado, podría interesarnos la conexión vía *ethernet* o vía punto de acceso.
+
+En el ejemplo hecho para la prueba de concepto, nos encontramos con un esquema similar al siguiente:
+
+
+
+
+
+
+
+
+
+
+
 
 https://jfrog.com/connect/post/install-docker-compose-on-raspberry-pi/
 
