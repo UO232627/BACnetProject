@@ -70,7 +70,7 @@ slaac private
 #fallback static_eth0
 
 interface wlan0
-        static ip_address=192.168.4.1/25
+        static ip_address=192.168.4.1/24
         nohook wpa_supplicant
 EOF
 
