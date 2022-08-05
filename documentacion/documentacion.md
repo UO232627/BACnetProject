@@ -205,11 +205,29 @@ Configuración lectura:
 
 ## DESPLIEGUE DEL ENTORNO EN UNA RASPBERRY PI
 
-AQUÍ EXPLICAR QUE ES LO QUE SE QUIERE HACER Y CÓMO
+Como se ha puede ver en el apartado de conversiones de datos y lecturas/escrituras, para poder integrar dispositivos *MQTT* como el *IAQ* con otros BACnet, es necesario tratar los datos y usar ciertos programas. Para facilitar esto, se ha creado un entorno de funcionamiento mediante una *Raspberry Pi* en el que todo lo necesario está preparado para su uso directo.
+
+Los pasos para preparar este entorno y como usarlo se explicarán a continuación.
 
 ### Configuración de la rapsberry pi como punto de acceso inalámbrico
 
-https://www.raspberrypi.com/documentation/computers/configuration.html#setting-up-a-routed-wireless-access-point
+Para este entorno de funcionamiento, se configurará nuestra *raspberry* como un punto de acceso wifi. De esta manera podremos conectar nuestro *broker MQTT* a ella y así poder procesar los datos y enviarlos a los dispositivos BACnet.
+
+Se han seguido los siguientes [pasos](https://www.raspberrypi.com/documentation/computers/configuration.html#setting-up-a-routed-wireless-access-point) para la configuración. Para facilitar la preparación, se puede hacer mediante los scripts preparados para este propósito.
+
+Contenido de los scripts y configuración:
+- [update.sh](https://github.com/UO232627/BACnetProject/blob/main/files/scripts/update.sh): Script necesario para actualizar el sistema operativo de la *raspberry*. **¡IMPORTANTE! Es el primero que hay que ejecutar**.
+- [access_point.sh](https://github.com/UO232627/BACnetProject/blob/main/files/scripts/acces_point.sh): Script que configura el punto de acceso wifi. Se debe ejecutar despues de haber actualizado el sistema. Este script tiene varias configuraciones que se pueden modificar:
+    - *dhcpcd.conf*: Al final de este fichero, podemos indicar la dirección IP (estática) que queremos que tenga nuestro entorno de funcionamiento, modificando el valor del parámetro en las últimas líneas.
+   
+        `interface wlan0` \
+        &nbsp;&nbsp;&nbsp;&nbsp;`static ip_address=192.168.4.1/24` \
+        &nbsp;&nbsp;&nbsp;&nbsp;`nohook wpa_supplicant`
+            
+        En este caso, la dirección es 192.168.4.1.
+
+    - *dnsmasq.conf*: Aquí se puede indicar el rango de direcciones que se quiere tener para los nuevos dispositivos que se conecten. Esto podemos configurarlo en la línea `dhcp-range=192.168.4.2,192.168.4.20,255.255.255.0,24h`. Aquí se puede indicar la dirección inicial (192.168.4.2), la final (192.168.4.20), la máscara de subred (255.255.255.0) y el tiempo que se da la dirección (24 horas). En este fichero también podemos indicar el alias que se le quiere dar a la red. En caso de haber modificado la dirección en el fichero *dhcpcd.conf*, también deberíamos cambiarla aquí `address=/gw.wlan/192.168.4.1`.
+    - 
 
 A node-red se accede desde 192.168.4.1:1880
 
