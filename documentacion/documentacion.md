@@ -285,7 +285,7 @@ Contenido de los scripts y configuración:
 
 Una vez finalizada la ejecución de ambos scripts, la red debería estar visible para conectarse mediante cualquier dispositivo, introduciendo la contraseña que se haya configurado.
 
-#### Configuración de Docker y sus contenedores
+#### Configuración de Docker y sus contenedores (**primera vez**)
 
 El segundo paso en la configuración de la *raspberry* es la dockerización del entorno y la creación de los contenedores necesarios para su correcto funcionamiento. De manera similar a la [prueba inicial hecha en local](https://github.com/UO232627/BACnetProject/blob/main/documentacion/documentacion.md#despliegue-del-entorno-en-local), se crearán dos contenedores, uno para añadir un cliente *NODE-RED* y otro para la creación de un *broker MQTT* mediante *mosquitto*.
 
@@ -296,6 +296,24 @@ Para la ejecución del script, usar el comando `sudo sh ./files/scripts/environm
 Una vez el script termine de ejecutarse, el entorno de trabajo ya estará disponible para conectar nuestros *IAQ* y configurar lo necesario en *NODE-RED*.
 
 **NOTA: La prueba de concepto está configurada para que el script cargue en *NODE-RED* un [flow de ejemplo](https://github.com/UO232627/BACnetProject/blob/main/files/docker/nodered/flows/flows.json), pero podría configurarse para que no cargue nada y empezar a hacer un flow desde cero**
+
+#### Configuración de Docker y sus contenedores (**segunda vez y posteriores**)
+
+Si el sistema se ha reiniciado o apagado por algún motivo, debemos volver a levantar los servicios docker cuando tengamos el sistema funcionando de nuevo. Para ello, usamos el mismo fichero docker-compose que en el caso de que se haga una instalación de cero.
+
+En primer lugar, si se ha actualizado o cambiado algo de la imagen de nuestro contenedor de *NODE-RED* (como por ejemplo que se haya cambiado el flow que carga inicialmente), debemos generar la nueva imagen. Para ello, nos situamos en el directorio *docker*:
+
+`cd ./files/docker`
+
+Una vez dentro, hacemos el build de la imagen:
+
+`sudo docker build ./nodered/dockerfile.dockerfile`
+
+Cuando tengamos la nueva imagen generada, desde el mismo directorio ya podemos desplegar nuestros servicios:
+
+`sudo docker-compose up`
+
+Con esto ya tendríamos el *broker MQTT* el cliente *NODE-RED* corriendo y a la escucha.
 
 ### Conexión a la red y sistema de ejemplo
 
