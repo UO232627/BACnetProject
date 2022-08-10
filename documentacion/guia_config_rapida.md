@@ -27,3 +27,5 @@ sudo docker-compose up
     - Crear las lecturas/escrituras necesarias (información detallada [aquí](https://github.com/UO232627/BACnetProject/blob/main/documentacion/documentacion.md#lecturaescritura-contra-un-dispositivo-bacnet-en-local-gatewaynode-red))
     - **Hacer el *deploy* del proyecto**
 9. En este punto, la configuración ya está terminada y las lecturas/escrituras de los dispositivos *BACnet* ya deberían estar funcionando con normalidad
+
+**NOTA: Si se quiere cambiar alguna de las configuraciones usadas en el entorno, por favor, seguir los pasos detallados indicados en la [documentación completa](https://github.com/UO232627/BACnetProject/blob/main/documentacion/documentacion.md#prueba-de-concepto---despliegue-del-entorno-en-una-raspberry-pi)**
