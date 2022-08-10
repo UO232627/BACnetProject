@@ -350,6 +350,6 @@ return msg;
 ```
 
 - *type*: Correspondiente al *app-tag* del módulo de escritura BACnet
-- *value*: Valor que se quiere escribir en el dispositivo
+- *value*: Valor que se quiere escribir en el dispositivo. Cada medida está en uno de los indices del array de medidas
 
 Una vez procesado el mensaje *MQTT*, se escribe en el dispositivo BACnet y se envían las medidas de manera individual de nuevo al broker *MQTT* con un tópic individual para cada medida, dentro de un topic por cada ID de un *IAQ*. En este punto, ya podemos [leer en YABE](https://github.com/UO232627/BACnetProject/blob/main/documentacion/documentacion.md#visualizaci%C3%B3n-de-la-red-en-yabewireshark-en-local-m%C3%A1s-detalles) las propiedades de cada objeto del dispositivo para comprobar los valores ya escritos.
