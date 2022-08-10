@@ -28,4 +28,4 @@ sudo docker-compose up
     - **Hacer el *deploy* del proyecto**
 9. En este punto, la configuración ya está terminada y las lecturas/escrituras de los dispositivos *BACnet* ya deberían estar funcionando con normalidad
 
-**NOTA: Si se quiere cambiar alguna de las configuraciones usadas en el entorno, por favor, seguir los pasos detallados indicados en la [documentación completa](https://github.com/UO232627/BACnetProject/blob/main/documentacion/documentacion.md#prueba-de-concepto---despliegue-del-entorno-en-una-raspberry-pi)**
+**NOTA: Si se quiere cambiar alguna de las configuraciones usadas en el entorno, por favor, seguir los pasos detallados indicados en el apartado [*PRUEBA DE CONCEPTO - DESPLIEGUE DEL ENTORNO EN UNA RASPBERRY PI*](https://github.com/UO232627/BACnetProject/blob/main/documentacion/documentacion.md#prueba-de-concepto---despliegue-del-entorno-en-una-raspberry-pi) de la documentación**
